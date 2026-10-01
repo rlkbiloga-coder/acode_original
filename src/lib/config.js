@@ -1,5 +1,5 @@
 const BASE_URL = "https://acode.app";
-let hasPro = false;
+let hasPro = true;
 
 const config = {
 	BASE_URL,

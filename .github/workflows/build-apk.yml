@@ -47,7 +47,7 @@ jobs:
         run: node utils/storage_manager.mjs y
 
       - name: Build debug APK
-        run: npm run build free dev apk
+        run: npm run build paid dev apk
 
       - name: Locate APK
         id: apk

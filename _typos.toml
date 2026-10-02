@@ -54,6 +54,8 @@ extend-exclude = [
 ]
 
 [default.extend-words]
+# pt-BR válido usado na interface
+oficial = "oficial"
 # temporary thing to staisfy the linter
 strech = "strech"
 contaienr = "contaienr"

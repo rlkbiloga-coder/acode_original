@@ -7,6 +7,8 @@
   <a href="https://github.com/rlkbiloga-coder/acode_original/actions"><img src="https://img.shields.io/github/actions/workflow/status/rlkbiloga-coder/acode_original/ci.yml?style=flat-square&label=CI" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/licen%C3%A7a-MIT-green?style=flat-square" alt="licença"></a>
   <a href="https://rlkbiloga-coder.github.io/acode_original/"><img src="https://img.shields.io/badge/site-online-purple?style=flat-square" alt="site"></a>
+  <a href="https://github.com/rlkbiloga-coder/acode_original/releases/tag/latest-apk"><img src="https://img.shields.io/badge/download-APK-blue?style=flat-square" alt="APK"></a>
+  <a href="https://github.com/rlkbiloga-coder/acode_original/blob/main/CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" alt="PRs"></a>
 </div>
 
 ---

@@ -11,6 +11,12 @@ updates:
    schedule:
      interval: weekly
  
+ - package-ecosystem: "npm"
+   directory: "/"
+   schedule:
+     interval: weekly
+   versioning-strategy: auto
+ 
  - package-ecosystem: "github-actions"
    directory: "/"
    schedule:

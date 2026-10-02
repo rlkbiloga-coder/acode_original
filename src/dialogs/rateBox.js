@@ -34,7 +34,7 @@ function rateBox() {
 				localStorage.dontAskForRating = true;
 			} else {
 				const stars = getStars(val);
-				const subject = "feedback - Acode editor";
+				const subject = "feedback - Thcode editor";
 				const textBody = stars + "</br>%0A" + getFeedbackBody("</br>%0A");
 				const email = config.FEEDBACK_EMAIL;
 				system.openInBrowser(

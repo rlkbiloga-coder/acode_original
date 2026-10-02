@@ -136,14 +136,8 @@ function createWelcomeContent() {
 			<section className="welcome-section welcome-links">
 				<h2 className="section-label">CONNECT</h2>
 				<div className="link-row">
-					<LinkItem icon="acode" label="Website" url={config.BASE_URL} />
+					<LinkItem icon="acode" label="Website" url={config.SITE_URL} />
 					<LinkItem icon="github" label="GitHub" url={config.GITHUB_URL} />
-					<LinkItem
-						icon="telegram"
-						label="Telegram"
-						url={config.TELEGRAM_URL}
-					/>
-					<LinkItem icon="discord" label="Discord" url={config.DISCORD_URL} />
 				</div>
 			</section>
 		</div>

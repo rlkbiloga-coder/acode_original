@@ -7,8 +7,8 @@
     <description>
         Thcode — editor de código avançado e IDE web para Android, com 10 bots de IA integrados.
     </description>
-    <author email="ajit@foxdebug.com" href="https://foxdebug.com">
-        Foxdebug
+    <author href="https://github.com/rlkbiloga-coder">
+        Thcode
     </author>
     <content src="index.html" />
     <access launch-external="yes" origin="*" />

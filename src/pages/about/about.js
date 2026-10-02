@@ -41,62 +41,32 @@ export default function AboutInclude() {
 						<div className="info-item-subtext">{webviewPackageName}</div>
 					</div>
 				</a>
-				<a href={config.BASE_URL} className="info-item">
+				<a href={config.SITE_URL} className="info-item">
 					<div className="info-item-icon">
 						<span className="icon acode"></span>
 					</div>
 					<div className="info-item-text">
-						Official webpage
-						<div className="info-item-subtext">{config.BASE_URL}</div>
+						Thcode — site oficial
+						<div className="info-item-subtext">{config.SITE_URL}</div>
 					</div>
 				</a>
-				<a href={config.FOXBIZ_URL} className="info-item">
+				<a href={config.BASE_URL} className="info-item">
 					<div className="info-item-icon">
-						<span className="icon foxbiz"></span>
+						<span className="icon cloud"></span>
 					</div>
 					<div className="info-item-text">
-						Foxbiz Software Pvt. Ltd.
-						<div className="info-item-subtext">{config.FOXBIZ_URL}</div>
+						Conta e plugins (serviço do editor base)
+						<div className="info-item-subtext">{config.BASE_URL}</div>
 					</div>
 				</a>
 			</div>
 
 			<div className="social-links">
-				<a href="mailto:apps@foxdebug.com" className="social-link">
-					<div className="social-icon">
-						<span className="icon gmail"></span>
-					</div>
-					Mail
-				</a>
-				<a href={config.TWITTER_URL} className="social-link">
-					<div className="social-icon">
-						<span className="icon twitter"></span>
-					</div>
-					Twitter
-				</a>
-				<a href={config.INSTAGRAM_URL} className="social-link">
-					<div className="social-icon">
-						<span className="icon instagram"></span>
-					</div>
-					Instagram
-				</a>
 				<a href={config.GITHUB_URL} className="social-link">
 					<div className="social-icon">
 						<span className="icon github"></span>
 					</div>
 					GitHub
-				</a>
-				<a href={config.TELEGRAM_URL} className="social-link">
-					<div className="social-icon">
-						<span className="icon telegram"></span>
-					</div>
-					Telegram
-				</a>
-				<a href={config.DISCORD_URL} className="social-link">
-					<div className="social-icon">
-						<span className="icon discord"></span>
-					</div>
-					Discord
 				</a>
 			</div>
 		</main>

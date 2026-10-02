@@ -40,6 +40,7 @@ const config = {
 	// Social Links
 	DOCS_URL: "https://docs.acode.app",
 	GITHUB_URL: "https://github.com/rlkbiloga-coder/acode_original",
+	SITE_URL: "https://rlkbiloga-coder.github.io/acode_original/",
 	TELEGRAM_URL: "https://t.me/foxdebug_acode",
 	DISCORD_URL: "https://discord.gg/nDqZsh7Rqz",
 	TWITTER_URL: "https://x.com/foxbiz_io",

@@ -352,6 +352,15 @@ fi
 chmod +x "$PREFIX/alpine/initrc"
 
 if [ "$FAILSAFE" != true ]; then
+    # Respect the login shell set by chsh (/etc/passwd), fall back to bash.
+    # The initrc prompt setup is bash-specific, so it is only used for bash;
+    # other shells (zsh, fish, etc.) start as login shells and load their own rc files.
     #everytime a terminal is started initrc will run
-    "$PREFIX/axs" -c "bash --rcfile /initrc -i"
+    USER_NAME="$(id -un 2>/dev/null || echo root)"
+    LOGIN_SHELL="$(grep "^${USER_NAME}:" /etc/passwd 2>/dev/null | cut -d: -f7 | head -n 1)"
+    if [ -n "$LOGIN_SHELL" ] && [ "$LOGIN_SHELL" != "/bin/bash" ] && [ -x "$LOGIN_SHELL" ]; then
+        "$PREFIX/axs" -c "$LOGIN_SHELL -i"
+    else
+        "$PREFIX/axs" -c "bash --rcfile /initrc -i"
+    fi
 fi

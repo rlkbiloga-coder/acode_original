@@ -1,5 +1,6 @@
 <div align="center">
   <img src="res/logo_1.png" width="180" alt="Acode">
+
   <h1>Thcode · Acode Editor</h1>
   <p><b>Editor de código para Android, com 10 bots de IA integrados</b></p>
 
@@ -9,6 +10,9 @@
   <a href="https://rlkbiloga-coder.github.io/acode_original/"><img src="https://img.shields.io/badge/site-online-purple?style=flat-square" alt="site"></a>
   <a href="https://github.com/rlkbiloga-coder/acode_original/releases/tag/latest-apk"><img src="https://img.shields.io/badge/download-APK-blue?style=flat-square" alt="APK"></a>
   <a href="https://github.com/rlkbiloga-coder/acode_original/blob/main/CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" alt="PRs"></a>
+  <a href="https://github.com/rlkbiloga-coder/acode_original/stargazers"><img src="https://img.shields.io/github/stars/rlkbiloga-coder/acode_original?style=flat-square" alt="stars"></a>
+  <a href="https://github.com/rlkbiloga-coder/acode_original/network/members"><img src="https://img.shields.io/github/forks/rlkbiloga-coder/acode_original?style=flat-square" alt="forks"></a>
+  <a href="https://github.com/rlkbiloga-coder/acode_original/commits/main"><img src="https://img.shields.io/github/last-commit/rlkbiloga-coder/acode_original?style=flat-square" alt="last commit"></a>
 </div>
 
 ---

@@ -1,0 +1,31 @@
+name: Lighthouse Performance
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    name: Measure site performance
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "lts/*"
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.15.1
+
+      - name: Run Lighthouse CI against the deployed site
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        run: lhci autorun --config=./lighthouserc.json --collect.url=https://rlkbiloga-coder.github.io/acode_original/

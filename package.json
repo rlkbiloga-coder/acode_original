@@ -180,7 +180,7 @@
     "dompurify": "^3.4.14",
     "escape-string-regexp": "^5.0.0",
     "esprima": "^4.0.1",
-    "filesize": "^11.0.22",
+    "filesize": "^11.0.25",
     "html-tag-js": "^2.4.16",
     "jszip": "^3.10.1",
     "katex": "^0.16.47",

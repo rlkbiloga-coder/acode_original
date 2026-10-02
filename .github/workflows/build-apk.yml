@@ -43,6 +43,11 @@ jobs:
           npm install -g cordova
           npm run setup
 
+      - name: Restore stable debug signing key
+        run: |
+          mkdir -p "$HOME/.android"
+          printf '%s' "${{ secrets.ANDROID_DEBUG_KEYSTORE }}" | base64 -d > "$HOME/.android/debug.keystore"
+
       - name: Allow storage permission (non-interactive)
         run: node utils/storage_manager.mjs y
 

@@ -46,7 +46,7 @@ function createWelcomeContent() {
 			<header className="welcome-header anim-in">
 				<img className="logo" src={logoSrc} width="48" height="48" alt="" />
 				<div className="welcome-header-text">
-					<h1>Welcome to Thcode</h1>
+					<h1>Welcome to Acode</h1>
 					<p className="tagline">
 						Editor avançado com 10 bots de IA integrados
 					</p>

@@ -1,4 +1,4 @@
-/* Thcode · Acode Editor — interações do site (JS puro) */
+/* Acode · Acode Editor — interações do site (JS puro) */
 (function () {
   "use strict";
 

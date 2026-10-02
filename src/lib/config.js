@@ -35,12 +35,12 @@ const config = {
 		"platinum",
 		"titanium",
 	]),
-	LOG_FILE_NAME: "Thcode.log",
+	LOG_FILE_NAME: "Acode.log",
 
 	// Social Links
 	DOCS_URL: "https://docs.acode.app",
-	GITHUB_URL: "https://github.com/rlkbiloga-coder/acode_original",
-	SITE_URL: "https://rlkbiloga-coder.github.io/acode_original/",
+	GITHUB_URL: "https://github.com/Acode-Foundation/Acode",
+	SITE_URL: "https://acode.app",
 	TELEGRAM_URL: "https://t.me/foxdebug_acode",
 	DISCORD_URL: "https://discord.gg/nDqZsh7Rqz",
 	TWITTER_URL: "https://x.com/foxbiz_io",

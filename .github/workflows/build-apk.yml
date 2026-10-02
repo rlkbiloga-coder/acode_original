@@ -1,4 +1,4 @@
-name: Build APK (Thcode)
+name: Build APK
 
 # Gera um APK de DEBUG instalável de verdade, usando o SDK Android
 # já incluso nos runners do GitHub Actions. Sem chaves/segredos de assinatura.
@@ -59,22 +59,22 @@ jobs:
         run: |
           APK_PATH=$(find platforms/android/app/build/outputs/apk -name "*.apk" | head -n1)
           echo "path=$APK_PATH" >> "$GITHUB_OUTPUT"
-          cp "$APK_PATH" "thcode-debug.apk"
+          cp "$APK_PATH" "acode.apk"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v7
         with:
-          name: thcode-debug-apk
-          path: thcode-debug.apk
+          name: acode-debug-apk
+          path: acode.apk
           retention-days: 30
 
       - name: Create/update "latest-apk" release
         uses: softprops/action-gh-release@v3
         with:
           tag_name: latest-apk
-          name: "Thcode — último APK de debug"
+          name: "Acode — último APK de debug"
           prerelease: true
           body: |
             APK de debug gerado automaticamente a partir do commit ${{ github.sha }}.
             Instale direto no Android (ative "fontes desconhecidas" se o sistema pedir).
-          files: thcode-debug.apk
+          files: acode.apk

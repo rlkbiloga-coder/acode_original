@@ -5,6 +5,7 @@ check-filename = true
 extend-exclude = [
     "node_modules",
     # Arquivos em português (docs, site e painel de Bots IA)
+    "docs/TESTE-APK.md",
     "REPOSITORY.md",
     "readme.md",
     "index.html",

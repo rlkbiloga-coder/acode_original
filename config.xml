@@ -3,12 +3,12 @@
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Thcode</name>
+    <name>Acode</name>
     <description>
-        Thcode — editor de código avançado e IDE web para Android, com 10 bots de IA integrados.
+        Light weight code editor and web IDE for android.
     </description>
-    <author href="https://github.com/rlkbiloga-coder">
-        Thcode
+    <author email="ajit@foxdebug.com" href="https://foxdebug.com">
+        Foxdebug
     </author>
     <content src="index.html" />
     <access launch-external="yes" origin="*" />

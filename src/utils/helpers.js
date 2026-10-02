@@ -360,7 +360,7 @@ export default {
 		);
 		const isTermuxUri = currentUri.includes("com.termux.documents");
 		const isAcodeTerminalPublicSafUri = currentUri.includes(
-			"com.foxdebug.acode.documents",
+			"com.rlkbiloga.thcode.documents",
 		);
 		const [, treeSegment = ""] = currentUri.split("/tree/");
 		const terminalBasePath = isAcodeTerminalPublicSafUri

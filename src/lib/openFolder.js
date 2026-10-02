@@ -26,12 +26,12 @@ import appSettings from "./settings";
 const isTermuxSafUri = (value = "") =>
 	value.startsWith("content://com.termux.documents/tree/");
 const isAcodeTerminalPublicSafUri = (value = "") =>
-	value.startsWith("content://com.foxdebug.acode.documents/tree/");
+	value.startsWith("content://com.rlkbiloga.thcode.documents/tree/");
 const isTerminalSafUri = (value = "") =>
 	isTermuxSafUri(value) || isAcodeTerminalPublicSafUri(value);
 
 const getTerminalPaths = () => {
-	const packageName = window.BuildInfo?.packageName || "com.foxdebug.acode";
+	const packageName = window.BuildInfo?.packageName || "com.rlkbiloga.thcode";
 	const dataDir = `/data/user/0/${packageName}`;
 	const alpineRoot = `${dataDir}/files/alpine`;
 	const publicDir = `${dataDir}/files/public`;

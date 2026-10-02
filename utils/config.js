@@ -7,8 +7,8 @@ const execFile = promisify(execFileCallback);
 
 const ADMOB_PLUGIN_ID = "admob-plus-cordova";
 const LEGACY_CONSENT_PLUGIN_ID = "cordova-plugin-consent";
-const ID_PAID = "com.foxdebug.acode";
-const ID_FREE = "com.foxdebug.acodefree";
+const ID_PAID = "com.rlkbiloga.thcode";
+const ID_FREE = "com.rlkbiloga.thcodefree";
 const VARIANTS = new Set(["free", "paid"]);
 const VARIANT_PLUGIN_IDS = [ADMOB_PLUGIN_ID, LEGACY_CONSENT_PLUGIN_ID];
 const PACKAGE_DEPENDENCY_SECTIONS = [

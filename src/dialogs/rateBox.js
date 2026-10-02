@@ -35,11 +35,11 @@ function rateBox() {
 			} else {
 				const stars = getStars(val);
 				const subject = "feedback - Thcode editor";
-				const textBody = stars + "</br>%0A" + getFeedbackBody("</br>%0A");
-				const email = config.FEEDBACK_EMAIL;
-				system.openInBrowser(
-					`mailto:${email}?subject=${subject}&body=${textBody}`,
-				);
+				const textBody = stars + "%0A" + getFeedbackBody("%0A");
+				const url = `${config.FEEDBACK_URL}?title=${encodeURIComponent(
+					subject,
+				)}&body=${textBody}`;
+				system.openInBrowser(url);
 			}
 		}, 100);
 

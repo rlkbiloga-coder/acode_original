@@ -58,7 +58,7 @@ function create($container, $toggler) {
 					className="user-icon-container"
 					onclick={handleUserIconClick}
 				>
-					<span className="icon account_circle"></span>
+					<span className="icon account_circle thcode-cta-glow"></span>
 				</div>
 			</div>
 			<div className="container"></div>

@@ -43,16 +43,16 @@ function createWelcomeContent() {
 	return (
 		<div id="welcome-tab" className="welcome-page scroll">
 			{/* Hero Section */}
-			<header className="welcome-header">
+			<header className="welcome-header anim-in">
 				<img className="logo" src={logoSrc} width="48" height="48" alt="" />
 				<div className="welcome-header-text">
-					<h1>Welcome to Acode</h1>
-					<p className="tagline">Powerful code editor for Android</p>
+					<h1>Welcome to Thcode</h1>
+					<p className="tagline">Editor avançado com 10 bots de IA integrados</p>
 				</div>
 			</header>
 
 			{/* Get Started Section */}
-			<section className="welcome-section">
+			<section className="welcome-section anim-in">
 				<h2 className="section-label">GET STARTED</h2>
 				<div className="action-list">
 					<ActionRow
@@ -94,7 +94,7 @@ function createWelcomeContent() {
 			</section>
 
 			{/* Configure Section */}
-			<section className="welcome-section">
+			<section className="welcome-section anim-in">
 				<h2 className="section-label">CONFIGURE</h2>
 				<div className="action-list">
 					<ActionRow
@@ -116,7 +116,7 @@ function createWelcomeContent() {
 			</section>
 
 			{/* Learn Section */}
-			<section className="welcome-section">
+			<section className="welcome-section anim-in">
 				<h2 className="section-label">LEARN</h2>
 				<div className="action-list">
 					<ActionRow

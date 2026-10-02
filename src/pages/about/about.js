@@ -16,7 +16,7 @@ export default function AboutInclude() {
 			<Logo />
 
 			<div className="version-info">
-				<h1 className="version-title">Acode editor</h1>
+				<h1 className="version-title">Thcode editor</h1>
 				<div className="version-number">
 					Version {BuildInfo.version} ({BuildInfo.versionCode})
 				</div>

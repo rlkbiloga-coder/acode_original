@@ -1,0 +1,105 @@
+// Thcode — animações globais compartilhadas
+// Entrada suave em cascata para seções/cards, glow pulsante para pontos de destaque,
+// e um brilho sutil em gradiente para elementos "chamativos" (ex: login).
+
+@keyframes thcode-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes thcode-pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(124, 92, 255, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(124, 92, 255, 0);
+  }
+}
+
+@keyframes thcode-gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes thcode-logo-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(124, 92, 255, 0));
+  }
+  50% {
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 10px rgba(124, 92, 255, 0.45));
+  }
+}
+
+// Fade-up em cascata — aplica em qualquer container com .anim-in
+.anim-in {
+  animation: thcode-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.welcome-header.anim-in {
+  animation-delay: 0s;
+}
+
+.welcome-section.anim-in:nth-of-type(1) {
+  animation-delay: 0.08s;
+}
+.welcome-section.anim-in:nth-of-type(2) {
+  animation-delay: 0.16s;
+}
+.welcome-section.anim-in:nth-of-type(3) {
+  animation-delay: 0.24s;
+}
+.welcome-section.anim-in:nth-of-type(4) {
+  animation-delay: 0.32s;
+}
+.welcome-section.anim-in:nth-of-type(5) {
+  animation-delay: 0.4s;
+}
+
+// Logo com respiração suave + brilho
+.welcome-header .logo {
+  animation: thcode-logo-breathe 3.2s ease-in-out infinite;
+}
+
+// Destaque "chamativo" reutilizável — ex: ícone de login deslogado
+.thcode-cta-glow {
+  animation: thcode-pulse-glow 2.2s ease-in-out infinite;
+  border-radius: 50%;
+}
+
+// Fundo em gradiente animado reutilizável
+.thcode-animated-gradient {
+  background: linear-gradient(
+    120deg,
+    rgba(124, 92, 255, 0.25),
+    rgba(77, 157, 255, 0.25),
+    rgba(124, 92, 255, 0.25)
+  );
+  background-size: 200% 200%;
+  animation: thcode-gradient-shift 6s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-in,
+  .welcome-header .logo,
+  .thcode-cta-glow,
+  .thcode-animated-gradient {
+    animation: none !important;
+  }
+}

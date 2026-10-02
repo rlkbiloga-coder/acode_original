@@ -16,6 +16,17 @@
     align-items: center;
     gap: 16px;
     margin-bottom: 48px;
+    padding: 20px;
+    border-radius: 16px;
+    background: linear-gradient(
+      120deg,
+      rgba(124, 92, 255, 0.14),
+      rgba(77, 157, 255, 0.14),
+      rgba(124, 92, 255, 0.14)
+    );
+    background-size: 200% 200%;
+    animation: thcode-gradient-shift 6s ease infinite,
+      thcode-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 
     .logo {
       width: 48px;

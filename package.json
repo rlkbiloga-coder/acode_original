@@ -1,7 +1,7 @@
 {
   "name": "com.foxdebug.acode",
   "displayName": "Acode",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Advanced mobile code editor for Android with 10 integrated AI bots (Acode-based)",
   "scripts": {
     "lang": "node ./utils/lang.js",

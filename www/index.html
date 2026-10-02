@@ -125,7 +125,7 @@
 
       if (!hasES6) {
         setStartupMessage(
-          "Acode requires a modern browser. Please update Android System WebView or Chrome."
+          "Thcode requires a modern browser. Please update Android System WebView or Chrome."
         );
       }
 
@@ -137,7 +137,7 @@
         window.__ACODE_WEBVIEW_MAJOR__ < MIN_WEBVIEW_MAJOR
       ) {
         setStartupMessage(
-          "Your Android System WebView is old. Update Android System WebView or Chrome if Acode stays on this screen."
+          "Your Android System WebView is old. Update Android System WebView or Chrome if Thcode stays on this screen."
         );
       }
 
@@ -157,9 +157,9 @@
         var message = event && event.message ? event.message : "Startup error";
         setStartupMessage(
           isStorageError(event && event.error)
-            ? "Acode failed to start: storage is unavailable. Try restarting your device, or clearing the app data. " +
+            ? "Thcode failed to start: storage is unavailable. Try restarting your device, or clearing the app data. " +
                 message
-            : "Acode failed to start. Update Android System WebView or Chrome. " +
+            : "Thcode failed to start. Update Android System WebView or Chrome. " +
                 message
         );
       }
@@ -171,9 +171,9 @@
           reason && reason.message ? reason.message : "Startup promise failed";
         setStartupMessage(
           isStorageError(reason)
-            ? "Acode failed to start: storage is unavailable. Try restarting your device, or clearing the app data. " +
+            ? "Thcode failed to start: storage is unavailable. Try restarting your device, or clearing the app data. " +
                 message
-            : "Acode failed to start. Update Android System WebView or Chrome. " +
+            : "Thcode failed to start. Update Android System WebView or Chrome. " +
                 message
         );
       }
@@ -188,7 +188,7 @@
 
   <script src="./build/boot.js"></script>
 
-  <title>Acode</title>
+  <title>Thcode</title>
 </head>
 
 <body class="loading" data-version="" data-small-msg="">

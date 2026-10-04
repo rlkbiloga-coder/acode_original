@@ -163,6 +163,7 @@
     "@lezer/highlight": "^1.2.3",
     "@lezer/lr": "^1.4.10",
     "@ungap/custom-elements": "^1.3.0",
+    "@vercel/analytics": "^2.0.1",
     "@xterm/addon-attach": "^0.12.0",
     "@xterm/addon-fit": "^0.11.0",
     "@xterm/addon-image": "^0.9.0",

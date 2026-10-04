@@ -1,5 +1,6 @@
 import "core-js/stable";
 import "html-tag-js/dist/polyfill";
+import { inject as injectAnalytics } from "@vercel/analytics";
 
 import "./main.scss";
 import "res/icons/style.css";
@@ -165,6 +166,9 @@ async function onDeviceReady() {
 	window.log = logger.log.bind(logger);
 
 	config.HAS_PRO = !isFreePackage;
+
+	// Initialize Vercel Web Analytics
+	injectAnalytics({ mode: "production" });
 
 	// Capture synchronous errors
 	window.addEventListener("error", (event) => {

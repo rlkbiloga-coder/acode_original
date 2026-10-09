@@ -185,7 +185,7 @@
     "html-tag-js": "^2.4.16",
     "isomorphic-git": "^1.43.0",
     "jszip": "^3.10.1",
-    "katex": "^0.18.2",
+    "katex": "^0.19.0",
     "markdown-it": "^14.3.0",
     "markdown-it-anchor": "^9.2.1",
     "markdown-it-emoji": "^3.1.0",

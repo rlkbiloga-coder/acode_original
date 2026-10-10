@@ -1,0 +1,38 @@
+/**
+ * Acodex UI — design tokens
+ *
+ * Single source of truth for radii, elevation and motion.
+ * Colors intentionally NOT defined here: they come from the theme system
+ * (--primary-color, --secondary-color, --border-color, ...) so light/dark
+ * and custom themes keep working unchanged.
+ *
+ * Conventions (see issue "Upgrade de UI do Acodex"):
+ *  - Prefer tokens over hardcoded px inside components.
+ *  - Keep a plain fallback line before any color-mix() declaration
+ *    (older Android WebViews ignore the unsupported one).
+ */
+:root {
+	/* motion */
+	--ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+	--ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+	--dur-fast: 140ms;
+	--dur-normal: 220ms;
+	--dur-slow: 320ms;
+
+	/* radii */
+	--radius-xs: 4px;
+	--radius-sm: 6px;
+	--radius-md: 10px;
+	--radius-lg: 14px;
+	--radius-full: 999px;
+
+	/* elevation */
+	--elevation-1: 0 1px 3px rgba(0, 0, 0, 0.18), 0 1px 2px rgba(0, 0, 0, 0.12);
+	--elevation-2: 0 3px 8px rgba(0, 0, 0, 0.18), 0 1px 3px rgba(0, 0, 0, 0.12);
+	--elevation-3: 0 8px 24px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.14);
+
+	/* focus ring */
+	--focus-ring: 0 0 0 2px var(--primary-color);
+	--focus-ring: 0 0 0 2px
+		color-mix(in srgb, var(--primary-color), transparent 45%);
+}

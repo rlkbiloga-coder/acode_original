@@ -8,14 +8,14 @@
  */
 
 const DEV_ACCOUNT = {
-	// Authentication server base URL, e.g. "https://auth.example.com".
-	// Must be configured before the dev account sign in can work.
-	apiBase: "",
+	// Authentication server (Base44 backend functions, operated by the backend team).
+	// See issue #27 / the gut repo for the server contract and status.
+	apiBase: "https://lyra-5cfe1b41.base44.app/functions",
 	endpoints: {
 		// POST {email, licenseKey, password} → 200 {user, token} | 401 {error}
-		login: "/dev/login",
+		login: "/devLogin",
 		// POST {token} → 204
-		logout: "/dev/logout",
+		logout: "/devLogout",
 	},
 };
 

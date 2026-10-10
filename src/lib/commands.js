@@ -829,6 +829,12 @@ Additional Info:
 		);
 		openWelcomeTab();
 	},
+	async "open-sandbox"() {
+		const { default: openSandboxTab } = await import(
+			/* webpackChunkName: "sandbox" */ "pages/sandbox/sandbox"
+		);
+		openSandboxTab();
+	},
 	async "toggle-inspector"() {
 		const devTools = (await import("lib/devTools")).default;
 		devTools.toggle();

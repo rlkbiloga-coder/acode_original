@@ -9,6 +9,7 @@ import "styles/overrideAceStyle.scss";
 import "styles/wideScreen.scss";
 // Editor tabs use a shadow root that only links build/main.css.
 import "pages/welcome/welcome.scss";
+import "pages/sandbox/sandbox.scss";
 
 import "lib/polyfill";
 import "cm/supportedModes";

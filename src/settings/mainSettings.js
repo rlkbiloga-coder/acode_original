@@ -13,6 +13,7 @@ import { showPrivacyOptions, subscribePrivacyState } from "lib/startAd";
 import openAdRewardsPage from "pages/adRewards";
 import appIconSetting, { preloadAppIconSetting } from "pages/appIconSetting";
 import Changelog from "pages/changelog/changelog";
+import openDevAccountPage from "pages/login";
 import plugins from "pages/plugins";
 import Sponsors from "pages/sponsors";
 import themeSetting from "pages/themeSetting";
@@ -71,6 +72,16 @@ export default function mainSettings() {
 			text: strings["preview settings"],
 			icon: "public",
 			info: strings["settings-info-main-preview-settings"],
+			category: categories.core,
+			chevron: true,
+		},
+		{
+			key: "dev-account",
+			text: strings?.dev_account || "Dev account",
+			icon: "account_circle",
+			info:
+				strings?.["settings-info-main-dev-account"] ||
+				"Sign in with a developer license.",
 			category: categories.core,
 			chevron: true,
 		},
@@ -288,6 +299,10 @@ export default function mainSettings() {
 
 			case "adRewards":
 				openAdRewardsPage();
+				break;
+
+			case "dev-account":
+				openDevAccountPage();
 				break;
 
 			case "formatter":

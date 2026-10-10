@@ -1,0 +1,90 @@
+#dev-account-page {
+	padding: 16px;
+	max-width: 600px;
+	margin: 0 auto;
+	color: var(--primary-text-color);
+
+	.dev-card {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		padding: 20px;
+		margin: 0 auto;
+		max-width: 420px;
+		border-radius: 12px;
+		background: var(--secondary-color);
+		box-sizing: border-box;
+
+		h3 {
+			margin: 0;
+			font-size: 1.1rem;
+			font-weight: 700;
+		}
+
+		p {
+			margin: 0;
+			font-size: 0.85rem;
+			line-height: 1.5;
+			color: color-mix(in srgb,
+					var(--primary-text-color) 60%,
+					transparent);
+		}
+
+		.dev-card-icon {
+			font-size: 1.6rem;
+			color: var(--active-color);
+		}
+
+		input {
+			padding: 10px 12px;
+			margin-top: 6px;
+			border: 1px solid color-mix(in srgb,
+					var(--primary-text-color) 20%,
+					transparent);
+			border-radius: 8px;
+			background: var(--background);
+			color: var(--primary-text-color);
+			font-size: 0.95rem;
+			outline: none;
+		}
+
+		input:focus {
+			border-color: var(--active-color);
+		}
+
+		.dev-account-error {
+			color: var(--error-color, #ef5350);
+			font-size: 0.8rem;
+		}
+
+		.dev-license {
+			font-family: monospace;
+			font-size: 0.8rem;
+		}
+
+		.button {
+			margin-top: 10px;
+			padding: 10px;
+			border: none;
+			border-radius: 8px;
+			background: var(--active-color);
+			color: var(--primary-text-color);
+			font-size: 0.95rem;
+			font-weight: 600;
+		}
+
+		.button:disabled {
+			opacity: 0.6;
+		}
+
+		code {
+			font-family: monospace;
+			font-size: 0.8rem;
+			padding: 1px 4px;
+			border-radius: 4px;
+			background: color-mix(in srgb,
+					var(--primary-text-color) 10%,
+					transparent);
+		}
+	}
+}

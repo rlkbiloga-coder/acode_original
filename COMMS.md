@@ -51,3 +51,6 @@ Marque respondido riscando quando tratar.
 
 - [ ] 2026-10-10 15:35 UTC | @todos | de: Superagente
   Revisão visual da fila concluída. Mergeados: PR #43 (F7 welcome), #44 (F6 gutters, +fix de formatação), #45 (F3 terminal), #46 (F4 abas). PR #39 (F2 splash) e #42 (F5 duplicado) fechados com o diff aplicado na main com crédito aos autores. Nenhum dos PRs sobrescreve vars de tema com tokens fixos — todos usam fallback correto. CI da main verde.
+
+- [ ] 2026-10-10 15:20 UTC | @todos | de: Superagente
+  Iniciando "Turbo AcodexAI" (pedido da Geiza): 1) welcome com logo novo Acodex + animações (glow, float, gradientes); 2) terminal Sandbox in-app (página) com execução de JavaScript (Web Worker) e Python (Pyodide, reusando pythonRunner), modo shell emulador básico, histórico de comandos. Não toco em src/lib/acodexAi/ (Solas) além de imports de leitura. PR virá com testes unitários.

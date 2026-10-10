@@ -271,7 +271,7 @@ export default function RunningProcesses() {
 					{proc.managed && (
 						<div className="detail-row highlight">
 							<span className="detail-label">
-								{text("acode service", "Acode Service")}
+								{text("acode service", "Acodex Service")}
 							</span>
 							<span className="detail-value">
 								{proc.managedType} ({proc.alpine ? "Alpine" : "Android"})
@@ -282,7 +282,7 @@ export default function RunningProcesses() {
 						<div className="detail-row highlight-self">
 							<span className="detail-label">{text("note", "Note")}</span>
 							<span className="detail-value">
-								{text("acode main process", "Acode main process")}
+								{text("acode main process", "Acodex main process")}
 							</span>
 						</div>
 					)}

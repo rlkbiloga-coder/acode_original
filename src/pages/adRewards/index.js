@@ -38,7 +38,7 @@ export default function openAdRewardsPage() {
 						<h1>Trade a short ad break for focused coding time.</h1>
 						<p>
 							Unlock temporary ad-free time without leaving the free version.
-							When your pass expires, Acode will show a toast and add a
+							When your pass expires, Acodex will show a toast and add a
 							notification in-app.
 						</p>
 					</div>
@@ -105,7 +105,7 @@ export default function openAdRewardsPage() {
 							<div className="offer-duration">One purchase</div>
 						</div>
 						<p>
-							If you use Acode daily, Pro still gives the cleanest experience.
+							If you use Acodex daily, Pro still gives the cleanest experience.
 						</p>
 						<button
 							type="button"

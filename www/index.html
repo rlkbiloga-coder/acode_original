@@ -260,9 +260,9 @@
         var message = event && event.message ? event.message : "Startup error";
         setStartupMessage(
           isStorageError(event && event.error)
-            ? "Acode failed to start: storage is unavailable. Try restarting your device, or clearing the app data. " +
+            ? "Acodex failed to start: storage is unavailable. Try restarting your device, or clearing the app data. " +
                 message
-            : "Acode failed to start. Update Android System WebView or Chrome. " +
+            : "Acodex failed to start. Update Android System WebView or Chrome. " +
                 message
         );
       }
@@ -274,9 +274,9 @@
           reason && reason.message ? reason.message : "Startup promise failed";
         setStartupMessage(
           isStorageError(reason)
-            ? "Acode failed to start: storage is unavailable. Try restarting your device, or clearing the app data. " +
+            ? "Acodex failed to start: storage is unavailable. Try restarting your device, or clearing the app data. " +
                 message
-            : "Acode failed to start. Update Android System WebView or Chrome. " +
+            : "Acodex failed to start. Update Android System WebView or Chrome. " +
                 message
         );
       }

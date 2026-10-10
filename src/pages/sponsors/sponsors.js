@@ -39,7 +39,7 @@ export default function Sponsors() {
 				</button>
 			</div>
 			<div className="sponsors-container">
-				<h2>Acode's Sponsors</h2>
+				<h2>Acodex's Sponsors</h2>
 				<div className="sponsors-list" onclick={handleLinkClick}>
 					<div className="tier">
 						<div className="tier-name">

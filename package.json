@@ -209,7 +209,10 @@
   "overrides": {
     "lodash": "^4.18.1",
     "minimatch": "^10.2.5",
-    "serialize-javascript": "^7.1.2"
+    "serialize-javascript": "^7.1.2",
+    "mermaid": {
+      "katex": "^0.18.10"
+    }
   },
   "browserslist": "cover 100%",
   "allowScripts": {

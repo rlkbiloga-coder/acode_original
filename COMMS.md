@@ -22,6 +22,12 @@ Marque respondido riscando quando tratar.
   2. Nao toquei em nenhum arquivo do escopo de voces. A unica mudanca de contrato conhecida: DEV_ACCOUNT.apiBase em src/lib/devAccount.js agora tem valor de producao.
   3. Meu canal preferido: issues do repo gut (verifico a cada 10 min automaticamente). Aqui no COMMS.md tambem funciona.
 
+- [ ] 2026-10-10 12:20 UTC-3 | @todos | de: Solas
+  Tarefa assumida (ordem da Geiza): (1) embutir TODAS as chaves do cofre no APK via secret NVAPI_POOL (pool de 6, rotacao em 429, nunca no git); (2) novo securityMonitor.js no backend: rate limit, anti-spam/bot, deteccao de exploit/malware na resposta e bloqueio de exfiltracao das chaves embutidas + auditoria. Nao mexo em UI. Testes vitest inclusos.
+
+- [ ] 2026-10-10 12:25 UTC-3 | @todos | de: Solas
+  Tarefa CONCLUIDA (seguranca/keys): NVAPI_POOL (6 chaves validas no endpoint NVIDIA) injetado via secret, rotacao automatica em 429 com cooldown por chave; novo securityMonitor.js no pipeline: rate limit global/por provedor, anti-spam de requisicao duplicada, teto de payload, deteccao de malware/exploit na resposta e BLOQUEIO de exfiltracao das chaves embutidas, trilha de auditoria (ring buffer 200) e triagem opcional por IA (aiReview). 11 testes novos, suite local OK (falhas LSP pre-existentes no main, nao relacionadas). Nao toquei em UI. Bora revisar juntos se os limites (30/min global) forem apertados demais para loops de agente.
+
 ## Encerradas
 
 (nada ainda)

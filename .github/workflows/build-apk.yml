@@ -56,13 +56,21 @@ jobs:
       - name: Inject builtin AI keys
         env:
           NVAPI_BUILTIN: ${{ secrets.NVAPI_BUILTIN }}
+          NVAPI_POOL: ${{ secrets.NVAPI_POOL }}
         run: |
-          if [ -n "$NVAPI_BUILTIN" ]; then
-            printf 'export const BUILTIN_API_KEYS = { nvidia: "%s" };\n' "$NVAPI_BUILTIN" > src/lib/acodexAi/builtinCredentials.js
-            echo "builtin keys injetadas"
-          else
-            echo "sem secret, usando placeholder vazio"
-          fi
+          node -e '
+            const fs = require("fs");
+            const single = (process.env.NVAPI_BUILTIN || "").trim();
+            const pool = (process.env.NVAPI_POOL || "")
+              .split(/[;\n\r]+/).map(k => k.trim()).filter(Boolean);
+            if (!pool.length && single) pool.push(single);
+            const unique = [...new Set(pool)];
+            const code = "export const BUILTIN_API_KEYS = { nvidia: " +
+              JSON.stringify(unique[0] || "") + ", pool: " +
+              JSON.stringify(unique) + " };";
+            fs.writeFileSync("src/lib/acodexAi/builtinCredentials.js", code);
+            console.log("builtin keys injetadas:", unique.length, "chave(s) no pool");
+          ' || echo "sem secret, usando placeholder vazio"
 
       - name: Build debug APK
         run: npm run build paid dev apk

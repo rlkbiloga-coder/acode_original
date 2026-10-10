@@ -1,4 +1,5 @@
 import { nativeFetch } from "./nativeFetch";
+import { checkRequest, inspectResponse } from "./securityMonitor";
 
 /**
  * @typedef {object} AiConfig
@@ -34,11 +35,41 @@ import { BUILTIN_API_KEYS } from "./builtinCredentials";
  * @param {string} baseUrl
  * @returns {string} chave ou ""
  */
+const keyPoolState = { index: 0, failed: {} };
+
+/**
+ * Retorna a chave embutida no build para a URL base, se houver. Usa o pool
+ * rotativo quando existir, pulando chaves marcadas como sobrecarregadas.
+ * @param {string} baseUrl
+ * @returns {string} chave ou ""
+ */
 export function getBuiltinKeyForBaseUrl(baseUrl) {
 	const url = String(baseUrl || "");
-	if (url.includes("integrate.api.nvidia.com"))
-		return BUILTIN_API_KEYS.nvidia || "";
-	return "";
+	if (!url.includes("integrate.api.nvidia.com")) return "";
+	const pool = Array.isArray(BUILTIN_API_KEYS.pool)
+		? BUILTIN_API_KEYS.pool.filter(Boolean)
+		: [];
+	if (!pool.length) return BUILTIN_API_KEYS.nvidia || "";
+	const now = Date.now();
+	for (let i = 0; i < pool.length; i += 1) {
+		const key = pool[(keyPoolState.index + i) % pool.length];
+		if ((keyPoolState.failed[key] || 0) < now) {
+			keyPoolState.index = (keyPoolState.index + i + 1) % pool.length;
+			return key;
+		}
+	}
+	// todas as chaves em cooldown: usa a próxima mesmo assim
+	keyPoolState.index = (keyPoolState.index + 1) % pool.length;
+	return pool[keyPoolState.index];
+}
+
+/**
+ * Marca uma chave do pool como falha (429/quota) por um tempo.
+ * @param {string} apiKey
+ * @param {number} cooldownMs
+ */
+export function markBuiltinKeyFailed(apiKey, cooldownMs = 60_000) {
+	if (apiKey) keyPoolState.failed[apiKey] = Date.now() + cooldownMs;
 }
 
 /**
@@ -113,20 +144,43 @@ export async function createChatCompletion({
 	const configError = validateAiConfig(config);
 	if (configError) throw new AiRequestError(configError);
 
+	const verdict = checkRequest({ config, messages });
+	if (!verdict.allowed)
+		throw new AiRequestError(
+			`blocked-by-security-monitor (${verdict.reasons.join(", ")})`,
+			429,
+		);
+
 	const body = { model: config.model, messages };
 	if (tools?.length) body.tools = tools;
 	if (onDelta) body.stream = true;
 
-	const response = await fetchImpl(buildCompletionsUrl(config.baseUrl), {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Accept: onDelta ? "text/event-stream" : "application/json",
-			Authorization: `Bearer ${config.apiKey.trim()}`,
-		},
-		body: JSON.stringify(body),
-		signal,
-	});
+	const send = () =>
+		fetchImpl(buildCompletionsUrl(config.baseUrl), {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Accept: onDelta ? "text/event-stream" : "application/json",
+				Authorization: `Bearer ${config.apiKey.trim()}`,
+			},
+			body: JSON.stringify(body),
+			signal,
+		});
+
+	let response = await send();
+	// sobrecarga (429): se a chave em uso veio do pool embutido, gira e tenta mais uma
+	if (response.status === 429) {
+		const current = config.apiKey?.trim?.() || "";
+		const pool = (BUILTIN_API_KEYS.pool || []).filter(Boolean);
+		if (pool.includes(current) || current === BUILTIN_API_KEYS.nvidia) {
+			const next = getBuiltinKeyForBaseUrl(config.baseUrl);
+			if (next && next !== current) {
+				markBuiltinKeyFailed(current);
+				config = { ...config, apiKey: next };
+				response = await send();
+			}
+		}
+	}
 
 	if (!response.ok) {
 		let detail = "";
@@ -146,6 +200,9 @@ export async function createChatCompletion({
 		const data = await response.json();
 		const message = data?.choices?.[0]?.message;
 		if (!message) throw new AiRequestError("empty-response");
+		const inspection = inspectResponse(message.content, config.baseUrl);
+		if (inspection.blocked)
+			throw new AiRequestError("response-blocked-by-security-monitor", 0);
 		return {
 			role: "assistant",
 			content: message.content ?? null,
@@ -153,7 +210,11 @@ export async function createChatCompletion({
 		};
 	}
 
-	return readStream(response.body, onDelta);
+	const assembled = await readStream(response.body, onDelta);
+	const inspection = inspectResponse(assembled?.content, config.baseUrl);
+	if (inspection.blocked)
+		throw new AiRequestError("response-blocked-by-security-monitor", 0);
+	return assembled;
 }
 
 /**

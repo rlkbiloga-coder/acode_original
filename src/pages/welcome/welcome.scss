@@ -23,13 +23,6 @@
     .logo-wrap {
       position: relative;
       padding: 10px;
-      border-radius: var(--radius-lg, 14px);
-      background: color-mix(
-        in srgb,
-        var(--popup-background-color) 45%,
-        transparent
-      );
-      box-shadow: var(--elevation-3, 0 8px 24px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.14));
       animation: logoFloat 4s var(--ease-in-out-soft, cubic-bezier(0.65, 0, 0.35, 1)) infinite;
 
       .logo-glow {

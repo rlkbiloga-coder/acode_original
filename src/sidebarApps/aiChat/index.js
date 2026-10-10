@@ -33,7 +33,9 @@ const SUGGESTIONS = [
 	"Explique o arquivo aberto",
 	"Encontre bugs neste código",
 	"Refatore a seleção atual",
-	"Busque TODO nos arquivos abertos",
+	"Gere casos de teste para o arquivo",
+	"Otimize a performance do código",
+	"Audite a segurança deste código",
 ];
 
 const FENCE = "```";
@@ -45,7 +47,33 @@ const SLASH_COMMANDS = [
 	{ cmd: "/modelo", desc: "Troca o modelo de IA" },
 	{ cmd: "/limpar", desc: "Apaga a conversa" },
 	{ cmd: "/ajuda", desc: "Mostra os comandos" },
+	{ cmd: "/explicar", desc: "Explica o código com terminologia técnica" },
+	{ cmd: "/bugs", desc: "Análise estática: bugs, edge cases e code smells" },
+	{ cmd: "/refatorar", desc: "Refatora o arquivo/seleção com boas práticas" },
+	{ cmd: "/testes", desc: "Gera casos de teste para o código" },
+	{ cmd: "/doc", desc: "Gera documentação (JSDoc/docstring)" },
+	{ cmd: "/commit", desc: "Gera mensagem de commit convencional" },
+	{ cmd: "/otimizar", desc: "Sugere otimizações de performance" },
+	{ cmd: "/seguranca", desc: "Audita vulnerabilidades do código" },
 ];
+
+/**
+ * Prompts de tarefa com terminologia avançada. A chave é o nome do comando
+ * sem a barra.
+ */
+const TASK_PROMPTS = {
+	explicar:
+		"Explique este código de forma estruturada, com terminologia técnica precisa (complexidade assintótica, padrões de projeto, estruturas de dados, fluxo de controle). Aponte o papel de cada bloco e o porquê das decisões.",
+	bugs: "Faça uma análise estática completa: aponte bugs, casos-limite (edge cases), condições de corrida, vazamentos de recurso e code smells. Para cada achado, informe: severidade (crítico/alto/médio/baixo), localização (linha/função) e correção sugerida com código.",
+	refatorar:
+		"Refatore este código aplicando boas práticas de engenharia: nomes descritivos, funções pequenas e coesas, responsabilidade única, princípio aberto/fechado, tratamento de erros explícito e imutabilidade onde fizer sentido. Entregue o código final completo e um changelog do que mudou.",
+	testes: "Gere uma suíte de casos de teste abrangente para este código: caminho feliz, casos-limite, entradas inválidas, mocks/stubs necessários e cobertura de erros. Use o framework adequado à linguagem e explique a cobertura pretendida.",
+	doc: "Gere a documentação deste código no padrão da linguagem (JSDoc, docstring ou comentário de API). Inclua descrição, parâmetros com tipos, retorno, exceções lançadas e um exemplo de uso.",
+	otimizar:
+		"Analise a complexidade de tempo e espaço deste código e proponha otimizações concretas: algoritmos melhores, memoização, processamento preguiçoso (lazy), redução de alocações e de I/O. Justifique cada ganho esperado com notação Big-O.",
+	seguranca:
+		"Faça uma auditoria de segurança neste código: injeção (SQL/command), XSS, path traversal, exposição de dados sensíveis e chaves, validação de entrada ausente e dependências inseguras. Relate cada item com severidade, vetor de ataque e mitigação com código.",
+};
 
 const CONFIG_ERRORS = {
 	"missing-api-key": "Configure sua chave de API para usar o Acodex AI.",
@@ -381,6 +409,31 @@ function handleSlashCommand(text) {
 		);
 		return true;
 	}
+	if (cmd === "/commit") {
+		const name = editorManager.activeFile?.filename ?? "projeto";
+		send(
+			arg ||
+				`Gere uma mensagem de commit no padrão Conventional Commits (tipo(escopo): descrição no imperativo) para as mudanças atuais de ${name}. Inclua body curto se necessário e sugira emojis de gitmoji opcionais.`,
+		);
+		return true;
+	}
+	if (TASK_PROMPTS[cmd.slice(1)]) {
+		const editor =
+			editorManager.activeFile?.type === "editor" ? editorManager.editor : null;
+		if (!editor) {
+			appendMessage("error", "Nenhum arquivo aberto.");
+			return true;
+		}
+		const name = editorManager.activeFile.filename ?? "arquivo";
+		const { from, to } = editor.state.selection.main;
+		const selection = editor.state.doc.sliceString(from, to);
+		const context = selection || editor.state.doc.toString();
+		const scopeLabel = selection ? `seleção em ${name}` : name;
+		send(
+			`[${scopeLabel}]\n${FENCE}\n${context}\n${FENCE}\n\n${TASK_PROMPTS[cmd.slice(1)]}`,
+		);
+		return true;
+	}
 	return false;
 }
 
@@ -483,8 +536,46 @@ function appendMessage(role, text) {
 	const $msg = <div className={`ai-msg ${role}`}></div>;
 	if (role === "assistant") {
 		$msg.append(renderAssistantMessage(text));
+		$msg.append(
+			<button
+				type="button"
+				className="ai-msg-copy"
+				title="Copiar mensagem"
+				aria-label="Copiar mensagem"
+				onclick={() => {
+					const value = text;
+					if (navigator.clipboard?.writeText) {
+						navigator.clipboard.writeText(value);
+					} else {
+						const $ta = <textarea className="ai-input" style="position:fixed;opacity:0"></textarea>;
+						document.body.append($ta);
+						$ta.value = value;
+						$ta.select();
+						document.execCommand("copy");
+						$ta.remove();
+					}
+				}}
+			>
+				<span className="icon content_copy" />
+			</button>,
+		);
+	} else if (role === "tool") {
+		const $tag = <span className="ai-tool-tag" aria-hidden="true"></span>;
+		$tag.textContent = "•";
+		$msg.append($tag, text);
 	} else {
 		$msg.textContent = text;
+	}
+	if (role === "user" || role === "assistant") {
+		const $time = (
+			<span className="ai-msg-time">
+				{new Date().toLocaleTimeString([], {
+					hour: "2-digit",
+					minute: "2-digit",
+				})}
+			</span>
+		);
+		$msg.append($time);
 	}
 	$messages.append($msg);
 	$messages.scrollTop = $messages.scrollHeight;

@@ -66,6 +66,13 @@
     color: var(--primary-text-color);
     font-size: 0.85rem;
     text-align: left;
+    transition: background 0.15s ease, border-color 0.15s ease;
+
+    &:active,
+    &:hover {
+      border-color: var(--active-color);
+      background: rgba(128, 128, 128, 0.08);
+    }
   }
 
   .ai-msg {
@@ -104,6 +111,55 @@
       font-size: 0.75rem;
       opacity: 0.7;
       color: var(--secondary-text-color);
+      font-family: var(--monospace, monospace);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ai-tool-tag {
+      color: var(--active-color);
+      opacity: 1;
+      font-size: 0.6rem;
+    }
+
+    .ai-msg-time {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.62rem;
+      opacity: 0.55;
+      user-select: none;
+    }
+
+    .ai-msg-copy {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      border: none;
+      border-radius: 4px;
+      background: transparent;
+      color: inherit;
+      opacity: 0.4;
+      font-size: 0.85rem;
+
+      &:active {
+        opacity: 1;
+      }
+    }
+
+    &.assistant {
+      position: relative;
+      padding-right: 26px;
+
+      .ai-msg-copy {
+        color: var(--secondary-text-color);
+      }
     }
 
     &.error {

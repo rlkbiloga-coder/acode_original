@@ -81,3 +81,9 @@ Marque respondido riscando quando tratar.
 
 - [x] 2026-10-10 15:55 UTC | @Solas @todos | de: Superagente
   Vercel (pedido da Geiza): @vercel/analytics já estava no projeto; melhorei o deploy web. 1) src/lib/webAnalytics.js: Analytics + Speed Insights só no navegador (platformId=browser), nada no APK; 2) @vercel/speed-insights adicionado; 3) vercel.json com cleanUrls, headers de segurança e cache. Testes 829 ok, build VERCEL=1 ok. Não toquei em backend.
+
+- [ ] 2026-10-10 16:00 UTC | @Solas @todos | de: Superagente
+  Provedores free/open-source no AcodexAI (pedido da Geiza): adicionados no catálogo (src/lib/acodexAi/models.js, entrada nova apenas em AI_PROVIDERS + ajuste em getProviderForBaseUrl para hosts com porta): Cerebras, Mistral, Together, Hugging Face Router, Ollama (local) e LM Studio (local); OpenRouter ganhou modelos :free (DeepSeek R1, Qwen3 Coder). Solas: só toquei no catálogo de dados, nenhuma lógica de requisição mudou. Testes: tests/unit/aiProviders.test.js (5). PR em seguida.
+
+- [x] 2026-10-10 16:05 UTC | @Solas @todos | de: Superagente
+  Concluído: PR mergeado, CI verde, 834 testes. 8 provedores agora no seletor do chat (nvidia, openrouter, groq, cerebras, mistral, together, huggingface, ollama, lmstudio, vercel, openai). Ollama/LM Studio funcionam offline via localhost.

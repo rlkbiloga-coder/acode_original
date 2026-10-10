@@ -84,6 +84,16 @@ export const AI_PROVIDERS = [
 				label: "DeepSeek R1",
 				badges: ["raciocínio"],
 			},
+			{
+				id: "deepseek/deepseek-r1:free",
+				label: "DeepSeek R1 (free)",
+				badges: ["raciocínio", "free"],
+			},
+			{
+				id: "qwen/qwen3-coder:free",
+				label: "Qwen3 Coder (free)",
+				badges: ["code", "free"],
+			},
 		],
 	},
 	{
@@ -99,6 +109,115 @@ export const AI_PROVIDERS = [
 				badges: ["rápido"],
 			},
 			{ id: "qwen/qwen3-32b", label: "Qwen 3 32B", badges: ["tools"] },
+		],
+	},
+	{
+		id: "cerebras",
+		label: "Cerebras",
+		baseUrl: "https://api.cerebras.ai/v1",
+		match: "api.cerebras.ai",
+		accent: "#f97316",
+		models: [
+			{
+				id: "llama-3.1-8b",
+				label: "Llama 3.1 8B",
+				badges: ["free", "rápido"],
+			},
+			{
+				id: "qwen-3-32b",
+				label: "Qwen 3 32B",
+				badges: ["free", "tools"],
+			},
+		],
+	},
+	{
+		id: "mistral",
+		label: "Mistral AI",
+		baseUrl: "https://api.mistral.ai/v1",
+		match: "api.mistral.ai",
+		accent: "#ff7000",
+		models: [
+			{
+				id: "codestral-latest",
+				label: "Codestral",
+				badges: ["code", "free"],
+			},
+			{
+				id: "magistral-small-latest",
+				label: "Magistral Small",
+				badges: ["raciocínio", "free"],
+			},
+		],
+	},
+	{
+		id: "together",
+		label: "Together AI",
+		baseUrl: "https://api.together.xyz/v1",
+		match: "api.together.xyz",
+		accent: "#0f6fff",
+		models: [
+			{
+				id: "deepseek-ai/DeepSeek-R1",
+				label: "DeepSeek R1",
+				badges: ["raciocínio", "free"],
+			},
+			{
+				id: "Qwen/Qwen2.5-Coder-32B-Instruct",
+				label: "Qwen 2.5 Coder 32B",
+				badges: ["code", "free"],
+			},
+		],
+	},
+	{
+		id: "huggingface",
+		label: "Hugging Face Router",
+		baseUrl: "https://router.huggingface.co/v1",
+		match: "router.huggingface.co",
+		accent: "#ffd21e",
+		models: [
+			{
+				id: "deepseek-ai/DeepSeek-V3-0324",
+				label: "DeepSeek V3",
+				badges: ["free"],
+			},
+			{
+				id: "Qwen/Qwen3-235B-A22B",
+				label: "Qwen 3 235B",
+				badges: ["free", "raciocínio"],
+			},
+		],
+	},
+	{
+		id: "ollama",
+		label: "Ollama (local)",
+		baseUrl: "http://localhost:11434/v1",
+		match: "localhost:11434",
+		accent: "#a3a3a3",
+		models: [
+			{
+				id: "qwen2.5-coder:7b",
+				label: "Qwen 2.5 Coder 7B",
+				badges: ["local", "code"],
+			},
+			{
+				id: "deepseek-r1:8b",
+				label: "DeepSeek R1 8B",
+				badges: ["local", "raciocínio"],
+			},
+		],
+	},
+	{
+		id: "lmstudio",
+		label: "LM Studio (local)",
+		baseUrl: "http://localhost:1234/v1",
+		match: "localhost:1234",
+		accent: "#4a9eff",
+		models: [
+			{
+				id: "qwen2.5-coder-7b-instruct",
+				label: "Qwen 2.5 Coder 7B",
+				badges: ["local", "code"],
+			},
 		],
 	},
 	{
@@ -135,15 +254,17 @@ export const AI_PROVIDERS = [
  * @returns {AiProvider|null}
  */
 export function getProviderForBaseUrl(baseUrl) {
-	let hostname = "";
+	// Compara host com porta (ex.: localhost:11434 para o Ollama local).
+	let host = "";
 	try {
-		hostname = new URL(baseUrl).hostname;
+		const url = new URL(baseUrl);
+		host = `${url.hostname}${url.port ? `:${url.port}` : ""}`;
 	} catch {
 		return null;
 	}
 	return (
 		AI_PROVIDERS.find(
-			(p) => hostname === p.match || hostname.endsWith(`.${p.match}`),
+			(p) => host === p.match || host.endsWith(`.${p.match}`),
 		) || null
 	);
 }

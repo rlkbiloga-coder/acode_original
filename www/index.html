@@ -47,25 +47,132 @@
       left: 0;
       inset: 0;
       z-index: 999999;
+      overflow: hidden;
 
-      background-color: var(--bg-color);
-      background-image:
-        radial-gradient(
-          ellipse 90% 55% at 50% 36%,
-          rgba(255, 255, 255, 0.07),
-          transparent 70%
-        ),
-        radial-gradient(
-          ellipse 120% 80% at 50% 110%,
-          rgba(0, 0, 0, 0.35),
-          transparent 60%
-        );
+      background-color: #0a0d18;
 
       text-align: center;
 
       /* Disable any possible fade on the splash container itself */
       animation: none !important;
       transition: none !important;
+    }
+
+    /* aurora: dois blobs de luz desfocados flutuando ao fundo */
+    .splash-aurora {
+      position: absolute;
+      inset: -20%;
+      pointer-events: none;
+    }
+
+    .splash-aurora::before,
+    .splash-aurora::after {
+      content: "";
+      position: absolute;
+      width: 70vmin;
+      height: 70vmin;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.22;
+      will-change: transform;
+    }
+
+    .splash-aurora::before {
+      top: -8%;
+      left: -12%;
+      background: #22d3ee;
+      animation: splashAuroraA 9s ease-in-out infinite alternate;
+    }
+
+    .splash-aurora::after {
+      bottom: -14%;
+      right: -10%;
+      background: #a855f7;
+      animation: splashAuroraB 11s ease-in-out infinite alternate;
+    }
+
+    @keyframes splashAuroraA {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(22%, 16%) scale(1.25); }
+    }
+
+    @keyframes splashAuroraB {
+      from { transform: translate(0, 0) scale(1.1); }
+      to { transform: translate(-20%, -12%) scale(0.9); }
+    }
+
+    /* grid synthwave em perspectiva no rodapé */
+    .splash-grid {
+      position: absolute;
+      left: -60%;
+      right: -60%;
+      bottom: -6%;
+      height: 46%;
+      pointer-events: none;
+      background-image:
+        repeating-linear-gradient(to right, rgba(34, 211, 238, 0.13) 0 1px, transparent 1px 44px),
+        repeating-linear-gradient(to bottom, rgba(168, 85, 247, 0.11) 0 1px, transparent 1px 44px);
+      transform: perspective(340px) rotateX(62deg);
+      transform-origin: 50% 0;
+      animation: splashGridScroll 1.6s linear infinite;
+      -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%);
+      mask-image: linear-gradient(to bottom, transparent, #000 22%);
+    }
+
+    @keyframes splashGridScroll {
+      from { background-position: 0 0, 0 0; }
+      to { background-position: 0 44px, 0 44px; }
+    }
+
+    /* scanlines CRT sutis por cima de tudo */
+    .splash-scanlines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.028) 0 1px,
+        transparent 1px 3px
+      );
+    }
+
+    /* anel de energia neon girando atrás do logo */
+    .splash-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 224px;
+      height: 224px;
+      margin-top: -124px;
+      margin-left: -112px;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(34, 211, 238, 0.9) 52deg,
+        transparent 118deg,
+        transparent 200deg,
+        rgba(168, 85, 247, 0.75) 258deg,
+        transparent 322deg
+      );
+      -webkit-mask-image: radial-gradient(
+        circle,
+        transparent 0 61%,
+        #000 62% 70%,
+        transparent 71% 100%
+      );
+      mask-image: radial-gradient(
+        circle,
+        transparent 0 61%,
+        #000 62% 70%,
+        transparent 71% 100%
+      );
+      animation: splashRingSpin 2.8s linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes splashRingSpin {
+      to { transform: rotate(360deg); }
     }
 
     #splash-logo {
@@ -80,12 +187,13 @@
       background-image: url("./splash-logo.png");
       background-position: center;
       background-repeat: no-repeat;
-      background-size: 140px;
+      background-size: 148px;
 
-      filter: drop-shadow(0 10px 32px rgba(0, 0, 0, 0.55));
+      filter: drop-shadow(0 0 14px rgba(34, 211, 238, 0.45))
+        drop-shadow(0 0 44px rgba(34, 211, 238, 0.22));
 
       animation: splashEnter var(--dur-slow) var(--ease-out-soft) both,
-        splashPulse 2.6s var(--ease-in-out-soft) var(--dur-slow) infinite;
+        splashFloat 3.4s var(--ease-in-out-soft) var(--dur-slow) infinite;
     }
 
     @keyframes splashEnter {
@@ -99,18 +207,13 @@
       }
     }
 
-    @keyframes splashPulse {
-      0% {
-        transform: scale(0.965);
-        opacity: 0.88;
+    @keyframes splashFloat {
+      0%,
+      100% {
+        transform: scale(0.985) translateY(0);
       }
       50% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(0.965);
-        opacity: 0.88;
+        transform: scale(1) translateY(-5px);
       }
     }
 
@@ -118,13 +221,14 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 150px;
+      width: 170px;
       height: 3px;
       margin-top: 76px;
-      margin-left: -75px;
+      margin-left: -85px;
       border-radius: var(--radius-full);
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.1);
       overflow: hidden;
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.25);
     }
 
     .splash-bar-fill {
@@ -134,8 +238,15 @@
       left: -40%;
       width: 40%;
       border-radius: var(--radius-full);
-      background: rgba(255, 255, 255, 0.85);
-      animation: splashBar 1.5s var(--ease-in-out-soft) infinite;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        #22d3ee 35%,
+        #a855f7 65%,
+        transparent
+      );
+      filter: blur(0.4px);
+      animation: splashBar 1.4s var(--ease-in-out-soft) infinite;
     }
 
     @keyframes splashBar {
@@ -168,7 +279,7 @@
       bottom: 28px;
       left: 50%;
       transform: translateX(-50%);
-      color: rgba(255, 255, 255, 0.55);
+      color: rgba(255, 255, 255, 0.6);
       font-size: 0.85rem;
       line-height: 1.4;
       width: 86vw;
@@ -186,17 +297,23 @@
         transform: translate(-50%, 0);
       }
     }
+
     @media (prefers-reduced-motion: reduce) {
-    #splash-logo,
-    .splash-bar-fill,
-    .splash-message {
-      animation: none;
+      #splash-logo,
+      .splash-ring,
+      .splash-grid,
+      .splash-aurora::before,
+      .splash-aurora::after,
+      .splash-bar-fill,
+      .splash-message {
+        animation: none;
+      }
+
+      .splash-bar-fill {
+        left: 30%;
+      }
     }
 
-    .splash-bar-fill {
-      left: 30%;
-    }
-  }
 </style>
 
   <!-- Set theme color BEFORE UI renders -->
@@ -317,7 +434,11 @@
 
 <body class="loading" data-version="" data-small-msg="">
   <div id="splash">
+    <div class="splash-aurora"></div>
+    <div class="splash-grid"></div>
+    <div class="splash-ring"></div>
     <div id="splash-logo"></div>
+    <div class="splash-scanlines"></div>
     <div class="splash-bar"><div class="splash-bar-fill"></div></div>
     <div class="splash-version"></div>
     <div class="splash-message"></div>

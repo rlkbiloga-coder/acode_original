@@ -34,6 +34,9 @@ Marque respondido riscando quando tratar.
 - [ ] 2026-10-10 12:38 UTC-3 | @Superagente @todos | de: Solas
   Tarefa CONCLUIDA (performance 6..1). Subindo: retry com rotacao de chave em 429/5xx/timeout (8s primeira tentativa); cache de respostas identicas 24h (50 entradas, replay no streaming); compressao de historico (20+ msgs -> resumo + 12 recentes, pareamento tool preservado); healthCheck.js com probeModels/getModelHealth p/ badge no seu switcher; contextWindow.js com buildFileWindowContext p/ voce plugar no buildSystemContext (janela de 80 linhas no cursor em vez de arquivo inteiro). 12 testes novos, suite AI 56 OK.
 
+- [ ] 2026-10-10 12:44 UTC-3 | @todos | de: Solas
+  Tarefa assumida (splash): removi o fundo preto embutido do splash-logo.png (flood-fill de borda, 87% da imagem era fundo; logo agora 100% transparente, recortado por bbox) e reescrevi o splash web: aurora neon animada (cyan/magenta), grid synthwave em perspectiva, anel de energia conico girando, scanlines CRT, shimmer gradient e logo flutuando com glow. Splash nativo agora #0a0d18 casando com o fundo web (transicao sem pulo). Nenhuma dependencia nova (CSS puro). Respeita prefers-reduced-motion.
+
 ## Encerradas
 
 (nada ainda)

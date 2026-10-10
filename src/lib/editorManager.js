@@ -1274,7 +1274,8 @@ async function EditorManager($header, $body) {
 					".cm-gutter.cm-foldGutter .cm-gutterElement": {
 						opacity: 0,
 						pointerEvents: "none",
-						transition: "opacity var(--dur-fast, 140ms) var(--ease-out-soft, cubic-bezier(0.16, 1, 0.3, 1))",
+						transition:
+							"opacity var(--dur-fast, 140ms) var(--ease-out-soft, cubic-bezier(0.16, 1, 0.3, 1))",
 					},
 					".cm-gutter.cm-foldGutter:hover .cm-gutterElement, .cm-gutter.cm-foldGutter .cm-gutterElement:hover":
 						{

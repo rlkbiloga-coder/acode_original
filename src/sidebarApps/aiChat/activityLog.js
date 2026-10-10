@@ -15,7 +15,7 @@ const STEP_ICONS = {
 
 /**
  * Cria um painel de atividade para um turno do agente.
- * @param {{ open?: boolean }} [options] estado inicial expandido
+ * @param {{ open?: boolean }} [options] estado padrão expandido
  */
 export function createActivityLog({ open = true } = {}) {
 	const startedAt = Date.now();

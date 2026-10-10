@@ -1,7 +1,7 @@
 /**
  * Entrada de imagem do Acodex AI (frontend).
  *
- * Permite anexar uma imagem à mensagem. A imagem é reduzida no cliente
+ * Permite anexar uma imagem à mensagem. A imagem é reduzida no app
  * (canvas) para um tamanho compatível com APIs de visão e convertida em
  * data URL. O conteúdo da mensagem segue o formato OpenAI (array de
  * partes text/image_url), compatível com Vercel AI Gateway, OpenRouter,
@@ -19,7 +19,7 @@ export const IMAGE_QUALITY = 0.85;
  * Análise avançada de código e contexto visual.
  */
 export const DEFAULT_IMAGE_PROMPT =
-	"Analise esta imagem em profundidade: identifique qualquer código (linguagem, framework, bibliotecas, versões), aponte erros, bugs e problemas visuais, descreva todo o conteúdo e dê recomendações acionáveis. Se houver código, transcreva-o corrigido.";
+	"Analise esta imagem em profundidade: identifique qualquer código (linguagem, framework, bibliotecas, versões), aponte erros, bugs e falhas visuais, descreva todo o conteúdo e dê recomendações acionáveis. Se houver código, transcreva-o corrigido.";
 
 /**
  * Monta o conteúdo (formato OpenAI) de uma mensagem de usuário com imagem.

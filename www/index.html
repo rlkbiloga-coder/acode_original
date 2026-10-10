@@ -189,11 +189,24 @@
       background-repeat: no-repeat;
       background-size: 148px;
 
-      filter: drop-shadow(0 0 14px rgba(34, 211, 238, 0.45))
-        drop-shadow(0 0 44px rgba(34, 211, 238, 0.22));
-
       animation: splashEnter var(--dur-slow) var(--ease-out-soft) both,
-        splashFloat 3.4s var(--ease-in-out-soft) var(--dur-slow) infinite;
+        splashFloat 3.4s var(--ease-in-out-soft) var(--dur-slow) infinite,
+        splashLogoGlow 2.2s var(--ease-in-out-soft) infinite;
+    }
+
+    /* glow neon pulsante no logo (efeito hologram) */
+    @keyframes splashLogoGlow {
+      0%,
+      100% {
+        filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.35))
+          drop-shadow(0 0 30px rgba(34, 211, 238, 0.16))
+          drop-shadow(0 0 60px rgba(168, 85, 247, 0.1));
+      }
+      50% {
+        filter: drop-shadow(0 0 22px rgba(34, 211, 238, 0.75))
+          drop-shadow(0 0 60px rgba(34, 211, 238, 0.35))
+          drop-shadow(0 0 110px rgba(168, 85, 247, 0.22));
+      }
     }
 
     @keyframes splashEnter {

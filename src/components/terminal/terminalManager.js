@@ -15,6 +15,7 @@ import appSettings from "lib/settings";
 import helpers from "utils/helpers";
 import Url from "utils/Url";
 import TerminalComponent from "./terminal";
+import TerminalThemeManager from "./terminalThemeManager";
 import TerminalTouchSelection from "./terminalTouchSelection";
 
 const TERMINAL_SESSION_STORAGE_KEY = "acodeTerminalSessions";
@@ -1057,12 +1058,17 @@ class TerminalManager {
 	 * @returns {string} CSS styles
 	 */
 	getTerminalStyles() {
+		// Keep the container chrome in sync with the active terminal theme so
+		// the first paint matches (updateBackgroundColor() only runs after mount).
+		const themeName = appSettings?.value?.terminalSettings?.theme || "dark";
+		const theme = TerminalThemeManager.getTheme(themeName);
+		const background = theme?.background || "#1e1e1e";
 		return `
 			.terminal-content {
 				width: 100%;
 				height: 100%;
 				box-sizing: border-box;
-				background: #1e1e1e;
+				background: ${background};
 				overflow: hidden;
 				position: relative;
 			}

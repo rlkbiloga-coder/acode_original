@@ -233,6 +233,17 @@
     }
   }
 
+  .ai-mic, .ai-attach {
+    background: transparent;
+    border: 1px solid var(--border-color, rgba(122, 122, 122, 0.3));
+    color: var(--primary-text-color, inherit);
+
+    &.attached {
+      color: var(--active-color);
+      border-color: var(--active-color);
+    }
+  }
+
   .ai-mic {
     background: transparent;
     border: 1px solid var(--border-color, rgba(122, 122, 122, 0.3));
@@ -278,6 +289,175 @@
 }
 
   /* refinamentos */
+
+  // Imagem anexada na mensagem do usuário
+  .ai-msg-image {
+    display: block;
+    max-width: 180px;
+    max-height: 180px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    border: 1px solid var(--border-color);
+  }
+
+  // Chip de anexo pendente no composer
+  .ai-attach-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1 0 100%;
+    order: -1;
+    padding: 4px 6px;
+    border-radius: 8px;
+    background: var(--secondary-color, #2c2c2e);
+    border: 1px solid var(--border-color);
+
+    &[hidden] {
+      display: none;
+    }
+
+    .ai-attach-thumb {
+      width: 34px;
+      height: 34px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .ai-attach-name {
+      flex: 1;
+      font-size: 0.75rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--primary-text-color);
+    }
+
+    .ai-attach-remove {
+      border: none;
+      background: transparent;
+      color: var(--error-text-color, #d93025);
+      padding: 4px;
+      display: flex;
+    }
+  }
+
+  // Painel de atividade (log do raciocínio)
+  .ai-log {
+    margin: 4px 0;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, rgba(122, 122, 122, 0.3));
+    background: var(--secondary-color, #1e1e1e);
+    overflow: hidden;
+    animation: ai-msg-in 0.18s ease;
+
+    .ai-log-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border: none;
+      background: transparent;
+      color: var(--secondary-text-color, inherit);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .ai-log-status {
+      flex: 1;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .ai-log-chev {
+      transition: transform var(--dur-fast, 140ms) ease;
+    }
+
+    .ai-log-steps {
+      display: none;
+      margin: 0;
+      padding: 2px 10px 8px 28px;
+      list-style: none;
+    }
+
+    &.open .ai-log-steps {
+      display: block;
+    }
+
+    &.open .ai-log-chev {
+      transform: rotate(180deg);
+    }
+
+    .ai-log-step {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 2px 0;
+      font-size: 0.72rem;
+      color: var(--secondary-text-color, inherit);
+
+      .ai-log-dot {
+        position: absolute;
+        left: -14px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--border-color, #888);
+      }
+
+      .ai-log-label {
+        flex: 0 1 auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .ai-log-meta {
+        flex: 1;
+        text-align: right;
+        opacity: 0.7;
+        font-size: 0.65rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      &.running .ai-log-dot {
+        background: var(--active-color, #7c4dff);
+        animation: ai-log-pulse 0.9s ease-in-out infinite;
+      }
+
+      &.done .ai-log-dot {
+        background: var(--success-color, #34c759);
+      }
+
+      &.fail .ai-log-dot {
+        background: var(--error-text-color, #d93025);
+      }
+
+      &.fail .ai-log-meta {
+        color: var(--error-text-color, #d93025);
+        opacity: 1;
+      }
+    }
+
+    &.finished.ok .ai-log-header {
+      color: var(--success-color, #34c759);
+    }
+
+    &.finished.failed .ai-log-header {
+      color: var(--error-text-color, #d93025);
+    }
+
+    @keyframes ai-log-pulse {
+      50% {
+        opacity: 0.35;
+      }
+    }
+  }
 
   .ai-msg {
     animation: ai-msg-in 0.18s ease;

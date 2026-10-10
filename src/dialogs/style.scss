@@ -30,11 +30,10 @@
   max-width: 320px;
   background-color: rgb(255, 255, 255);
   background-color: var(--popup-background-color);
-  box-shadow: var(
-    --elevation-3,
-    0 8px 24px rgba(0, 0, 0, 0.22),
-    0 2px 6px rgba(0, 0, 0, 0.14)
-  );
+  /* shape da elevação 3 (designTokens); cor segue o tema ativo */
+  box-shadow:
+    0 8px 24px var(--box-shadow-color, rgba(0, 0, 0, 0.22)),
+    0 2px 6px var(--box-shadow-color, rgba(0, 0, 0, 0.14));
   border-radius: 2px !important;
   border-radius: var(--popup-border-radius, var(--radius-lg, 14px)) !important;
   overflow: hidden;
@@ -317,11 +316,10 @@
           padding: 6px;
           border-radius: var(--radius-md, 10px);
           background: var(--popup-background-color, #fff);
-          box-shadow: var(
-            --elevation-2,
-            0 3px 8px rgba(0, 0, 0, 0.18),
-            0 1px 3px rgba(0, 0, 0, 0.12)
-          );
+          /* shape elevação 2; cor do tema */
+          box-shadow:
+            0 3px 8px var(--box-shadow-color, rgba(0, 0, 0, 0.18)),
+            0 1px 3px var(--box-shadow-color, rgba(0, 0, 0, 0.12));
 
           .format-option {
             padding: 6px 14px;

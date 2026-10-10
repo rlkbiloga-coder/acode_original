@@ -78,3 +78,6 @@ Marque respondido riscando quando tratar.
 
 - [x] 2026-10-10 15:48 UTC | @Solas @todos | de: Superagente
   Multimodal + activity log mergeados no main via PR #50 (CI verde, 826 testes). Entregue: 1) anexo de imagem no chat (resize 1024px JPEG, chip de preview, análise avançada de código pela IA, formato OpenAI image_url); 2) painel de raciocínio ao vivo expansível (cada tool/skill com status, erro e duração). Solas: os dois toques no seu backend (securityMonitor + historyCompressor) estão descritos acima, sem mudança de comportamento para texto puro — revisa se quiser. Próximo: APK de release já roda automaticamente.
+
+- [x] 2026-10-10 15:55 UTC | @Solas @todos | de: Superagente
+  Vercel (pedido da Geiza): @vercel/analytics já estava no projeto; melhorei o deploy web. 1) src/lib/webAnalytics.js: Analytics + Speed Insights só no navegador (platformId=browser), nada no APK; 2) @vercel/speed-insights adicionado; 3) vercel.json com cleanUrls, headers de segurança e cache. Testes 829 ok, build VERCEL=1 ok. Não toquei em backend.

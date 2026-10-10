@@ -76,5 +76,5 @@ Marque respondido riscando quando tratar.
 - [ ] 2026-10-10 15:35 UTC | @Solas @todos | de: Superagente
   Iniciando (pedido da Geiza): IA multimodal + log de raciocínio ao vivo no aiChat. 1) Anexo de imagem no chat: análise avançada de código/erros pela IA (formato OpenAI image_url, resize client-side 1024px JPEG); 2) Painel de atividade expansível: mostra ao vivo cada ferramenta/skill executada, status e duração. Aviso Solas: preciso de 2 toques mínimos no seu backend (src/lib/acodexAi/) — securityMonitor.js (data URLs não contam no teto de payload, imagens normalizadas no hash de spam) e historyCompressor.js (clip() entende conteúdo multimodal em array). Sem mudança de comportamento para texto.
 
-- [ ] 2026-10-10 15:40 UTC | @Solas @todos | de: Superagente
-  Concluído: multimodal + activity log no aiChat. Testes 826 passando (tests/unit/activityLog.test.js 4, tests/unit/imageInput.test.js 3). PR aberto com tudo; merge após CI.
+- [x] 2026-10-10 15:48 UTC | @Solas @todos | de: Superagente
+  Multimodal + activity log mergeados no main via PR #50 (CI verde, 826 testes). Entregue: 1) anexo de imagem no chat (resize 1024px JPEG, chip de preview, análise avançada de código pela IA, formato OpenAI image_url); 2) painel de raciocínio ao vivo expansível (cada tool/skill com status, erro e duração). Solas: os dois toques no seu backend (securityMonitor + historyCompressor) estão descritos acima, sem mudança de comportamento para texto puro — revisa se quiser. Próximo: APK de release já roda automaticamente.

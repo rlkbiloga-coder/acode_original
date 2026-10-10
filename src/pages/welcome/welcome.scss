@@ -18,17 +18,17 @@
     gap: 10px;
     margin-bottom: 44px;
     text-align: center;
-    animation: welcomeFadeUp 0.5s ease-out both;
+    animation: welcomeFadeUp 0.5s var(--ease-out-soft, cubic-bezier(0.16, 1, 0.3, 1)) both;
 
     .logo-wrap {
       padding: 8px;
-      border-radius: 22px;
+      border-radius: var(--radius-lg, 14px);
       background: color-mix(
         in srgb,
         var(--popup-background-color) 45%,
         transparent
       );
-      box-shadow: 0 10px 34px color-mix(in srgb, var(--primary-text-color) 12%, transparent);
+      box-shadow: var(--elevation-3, 0 8px 24px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.14));
     }
 
     .logo {
@@ -54,7 +54,7 @@
       color: color-mix(in srgb, var(--secondary-text-color) 60%, transparent);
       margin: 0;
       padding: 4px 14px;
-      border-radius: 20px;
+      border-radius: var(--radius-lg, 14px);
       background: color-mix(
         in srgb,
         var(--popup-background-color) 30%,
@@ -70,10 +70,10 @@
     max-width: 420px;
     margin-bottom: 22px;
     padding: 16px;
-    border-radius: 14px;
+    border-radius: var(--radius-lg, 14px);
     background: color-mix(in srgb, var(--popup-background-color) 22%, transparent);
     border: 1px solid color-mix(in srgb, var(--border-color) 20%, transparent);
-    animation: welcomeFadeUp 0.5s ease-out both;
+    animation: welcomeFadeUp 0.5s var(--ease-out-soft, cubic-bezier(0.16, 1, 0.3, 1)) both;
 
     &:nth-of-type(2) {
       animation-delay: 0.06s;
@@ -121,11 +121,11 @@
     align-items: center;
     gap: 12px;
     padding: 11px 12px;
-    border-radius: 10px;
+    border-radius: var(--radius-md, 10px);
     cursor: pointer;
     transition:
-      background-color 0.15s ease,
-      transform 0.15s ease;
+      background-color var(--dur-fast, 140ms) var(--ease-out-soft, cubic-bezier(0.16, 1, 0.3, 1)),
+      transform var(--dur-fast, 140ms) var(--ease-out-soft, cubic-bezier(0.16, 1, 0.3, 1));
 
     &:hover,
     &:active {
@@ -149,7 +149,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      border-radius: 9px;
+      border-radius: var(--radius-md, 10px);
       background: color-mix(
         in srgb,
         var(--popup-background-color) 40%,
@@ -170,7 +170,7 @@
       color: color-mix(in srgb, var(--secondary-text-color) 40%, transparent);
       letter-spacing: 0.5px;
       padding: 3px 8px;
-      border-radius: 6px;
+      border-radius: var(--radius-sm, 6px);
       background: color-mix(
         in srgb,
         var(--popup-background-color) 30%,
@@ -195,12 +195,12 @@
       align-items: center;
       gap: 8px;
       padding: 10px 16px;
-      border-radius: 10px;
+      border-radius: var(--radius-md, 10px);
       text-decoration: none;
       color: var(--secondary-text-color);
       font-size: 13px;
       font-weight: 500;
-      transition: all 0.15s ease;
+      transition: all var(--dur-fast, 140ms) var(--ease-out-soft, cubic-bezier(0.16, 1, 0.3, 1));
       background-color: color-mix(
         in srgb,
         var(--popup-background-color) 25%,

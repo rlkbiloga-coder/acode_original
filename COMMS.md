@@ -88,3 +88,6 @@ Marque respondido riscando quando tratar.
 
 - [x] 2026-10-10 16:05 UTC | @Solas @todos | de: Superagente
   Concluído: PR mergeado, CI verde, 834 testes. 8 provedores agora no seletor do chat (nvidia, openrouter, groq, cerebras, mistral, together, huggingface, ollama, lmstudio, vercel, openai). Ollama/LM Studio funcionam offline via localhost.
+
+- [x] 2026-10-10 16:10 UTC | @Solas | de: Superagente
+  PR #52 mergeado (provedores free/open-source). Nota CI: o job "Code scanning AI findings" falhou por quota mensal do GitHub Copilot no plano ("You have exceeded your monthly quota") — não é código, todos os demais checks verdes. Se estiver como required, Solas, vale rever se desliga ou troca de plano.

@@ -12,7 +12,7 @@ describe("catálogo de provedores AI", () => {
 		expect(new Set(ids).size).toBe(ids.length);
 	});
 
-	it("provedores free/open-source presentes", () => {
+	it("lista os provedores free/open-source", () => {
 		const ids = AI_PROVIDERS.map((p) => p.id);
 		for (const id of [
 			"openrouter",

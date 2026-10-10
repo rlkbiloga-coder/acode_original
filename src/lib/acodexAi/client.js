@@ -1,4 +1,9 @@
 import { nativeFetch } from "./nativeFetch";
+import {
+	clearResponseCache,
+	getCachedResponse,
+	storeCachedResponse,
+} from "./responseCache";
 import { checkRequest, inspectResponse } from "./securityMonitor";
 
 /**
@@ -137,7 +142,7 @@ export async function createChatCompletion({
 	config,
 	messages,
 	tools,
-	signal,
+	signal: signalParam,
 	onDelta,
 	fetchImpl = nativeFetch,
 }) {
@@ -151,12 +156,24 @@ export async function createChatCompletion({
 			429,
 		);
 
+	// resposta cacheada? devolve na hora, sem gastar API
+	const cached = getCachedResponse(config, messages, tools);
+	if (cached) {
+		if (onDelta && cached.content) onDelta(cached.content);
+		return cached;
+	}
+
 	const body = { model: config.model, messages };
 	if (tools?.length) body.tools = tools;
 	if (onDelta) body.stream = true;
 
-	const send = () =>
-		fetchImpl(buildCompletionsUrl(config.baseUrl), {
+	const send = (timeoutMs = 30_000) => {
+		// combina o sinal do usuário com o timeout por requisição
+		const timeoutSignal = AbortSignal.timeout(timeoutMs);
+		const combined = signalParam
+			? AbortSignal.any([signalParam, timeoutSignal])
+			: timeoutSignal;
+		return fetchImpl(buildCompletionsUrl(config.baseUrl), {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -164,12 +181,25 @@ export async function createChatCompletion({
 				Authorization: `Bearer ${config.apiKey.trim()}`,
 			},
 			body: JSON.stringify(body),
-			signal,
+			signal: combined,
 		});
+	};
 
-	let response = await send();
-	// sobrecarga (429): se a chave em uso veio do pool embutido, gira e tenta mais uma
-	if (response.status === 429) {
+	let response = null;
+	for (let attempt = 0; attempt < 2; attempt += 1) {
+		try {
+			response = await send(attempt === 0 ? 8000 : 20_000);
+		} catch (error) {
+			// timeout/rede na 1ª tentativa: ainda temos direito ao retry
+			if (attempt === 1) throw error;
+			response = { status: 0 };
+		}
+		const retryable =
+			response.status === 429 ||
+			response.status >= 500 ||
+			response.status === 0;
+		if (!retryable || attempt === 1) break;
+		// só gira se a chave em uso veio do pool embutido
 		const current = config.apiKey?.trim?.() || "";
 		const pool = (BUILTIN_API_KEYS.pool || []).filter(Boolean);
 		if (pool.includes(current) || current === BUILTIN_API_KEYS.nvidia) {
@@ -177,7 +207,6 @@ export async function createChatCompletion({
 			if (next && next !== current) {
 				markBuiltinKeyFailed(current);
 				config = { ...config, apiKey: next };
-				response = await send();
 			}
 		}
 	}
@@ -203,11 +232,13 @@ export async function createChatCompletion({
 		const inspection = inspectResponse(message.content, config.baseUrl);
 		if (inspection.blocked)
 			throw new AiRequestError("response-blocked-by-security-monitor", 0);
-		return {
+		const final = {
 			role: "assistant",
 			content: message.content ?? null,
 			...(message.tool_calls?.length ? { tool_calls: message.tool_calls } : {}),
 		};
+		storeCachedResponse(config, messages, tools, final);
+		return final;
 	}
 
 	const assembled = await readStream(response.body, onDelta);
@@ -289,3 +320,5 @@ async function readStream(stream, onDelta) {
 		...(toolCalls.length ? { tool_calls: toolCalls } : {}),
 	};
 }
+
+export { clearResponseCache };

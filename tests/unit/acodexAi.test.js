@@ -4,6 +4,7 @@ import {
 	buildCompletionsUrl,
 	createChatCompletion,
 	validateAiConfig,
+	clearResponseCache,
 } from "lib/acodexAi/client";
 import { createToolRegistry, truncate } from "lib/acodexAi/tools";
 import { splitMarkdownCode } from "sidebarApps/aiChat/format";
@@ -83,6 +84,7 @@ describe("acodexAi client", () => {
 	});
 
 	it("surfaces API error messages", async () => {
+		clearResponseCache(); // evita resposta da cache do teste anterior
 		const fetchImpl = async () => ({
 			ok: false,
 			status: 401,

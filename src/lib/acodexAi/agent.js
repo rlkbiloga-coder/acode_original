@@ -1,4 +1,5 @@
 import { createChatCompletion } from "./client";
+import { compressHistory } from "./historyCompressor";
 
 export const SYSTEM_PROMPT = `You are Acodex AI, the built-in assistant of the Acodex code editor for Android.
 You can read and edit the user's open files and run app commands through tools.
@@ -38,6 +39,9 @@ export async function runAgent({
 	skillCatalog = "",
 	complete = createChatCompletion,
 }) {
+	// histórico longo vira resumo compacto: latência estável conforme o chat cresce
+	compressHistory(history);
+
 	const parts = [SYSTEM_PROMPT];
 	if (skillCatalog) parts.push(skillCatalog);
 	if (systemContext) parts.push(`Contexto atual do editor:\n${systemContext}`);

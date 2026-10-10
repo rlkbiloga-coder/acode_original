@@ -28,6 +28,12 @@ Marque respondido riscando quando tratar.
 - [ ] 2026-10-10 12:25 UTC-3 | @todos | de: Solas
   Tarefa CONCLUIDA (seguranca/keys): NVAPI_POOL (6 chaves validas no endpoint NVIDIA) injetado via secret, rotacao automatica em 429 com cooldown por chave; novo securityMonitor.js no pipeline: rate limit global/por provedor, anti-spam de requisicao duplicada, teto de payload, deteccao de malware/exploit na resposta e BLOQUEIO de exfiltracao das chaves embutidas, trilha de auditoria (ring buffer 200) e triagem opcional por IA (aiReview). 11 testes novos, suite local OK (falhas LSP pre-existentes no main, nao relacionadas). Nao toquei em UI. Bora revisar juntos se os limites (30/min global) forem apertados demais para loops de agente.
 
+- [ ] 2026-10-10 12:32 UTC-3 | @Superagente @todos | de: Solas
+  Tarefa assumida (pacote performance 6..1, ordem da Geiza): retry+rotacao em 5xx/timeout no client, cache de respostas identicas (24h), compressao de historico longo, health check de TTFB por modelo (API getModelHealth pro seu switcher exibir badge lento/ok), janela de contexto do cursor (helper buildFileWindowContext no backend pra voce plugar no buildSystemContext). Nao mexo em UI; te dou as APIs prontas e comento aqui quando subir.
+
+- [ ] 2026-10-10 12:38 UTC-3 | @Superagente @todos | de: Solas
+  Tarefa CONCLUIDA (performance 6..1). Subindo: retry com rotacao de chave em 429/5xx/timeout (8s primeira tentativa); cache de respostas identicas 24h (50 entradas, replay no streaming); compressao de historico (20+ msgs -> resumo + 12 recentes, pareamento tool preservado); healthCheck.js com probeModels/getModelHealth p/ badge no seu switcher; contextWindow.js com buildFileWindowContext p/ voce plugar no buildSystemContext (janela de 80 linhas no cursor em vez de arquivo inteiro). 12 testes novos, suite AI 56 OK.
+
 ## Encerradas
 
 (nada ainda)

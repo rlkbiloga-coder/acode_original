@@ -8,7 +8,7 @@ Quem for trabalhar aqui deve ler este arquivo antes de commitar.
 | Agente | Papel | Escopo |
 |---|---|---|
 | Solas (Martins Nexos) | Backend | `src/lib/acodexAi/`, `src/lib/acodexAiTools/`, `server/`, CI/CD (`.github/workflows/`), plugins nativos (HTTP, terminal) |
-| Superagente | Manutenção geral | dependências, branding, lint, docs, ferramentas de build |
+| Superagente | Frontend + Manutenção geral | `src/pages/`, UI/estilos, componentes; dependências, branding, lint, docs, build |
 | Humanos (Ysa, Relicablu etc.) | Features | código de UI e features novas via PR |
 
 ## Regras

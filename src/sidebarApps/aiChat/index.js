@@ -11,8 +11,14 @@ import commands from "lib/commands";
 import EditorFile from "lib/editorFile";
 import openFile from "lib/openFile";
 import appSettings from "lib/settings";
+import { createActivityLog } from "./activityLog";
 import { upgradeAssistantMessage } from "./advancedRender";
 import { renderAssistantMessage } from "./format";
+import {
+	buildVisionContent,
+	createImageInput,
+	DEFAULT_IMAGE_PROMPT,
+} from "./imageInput";
 import { createModelSwitcher } from "./modelSwitcher";
 import { createVoiceInput, isVoiceSupported } from "./voiceInput";
 
@@ -28,6 +34,8 @@ const TOOL_LABELS = {
 	list_commands: "Listando comandos",
 	search_open_files: "Buscando nos arquivos",
 	run_command: "Executando comando",
+	list_skills: "Listando skills",
+	load_skill: "Carregando skill",
 };
 
 const SUGGESTIONS = [
@@ -108,6 +116,10 @@ let $sendBtn;
 let $micBtn;
 /** @type {HTMLElement} */
 let $voiceHint;
+/** @type {HTMLButtonElement} */
+let $attachBtn;
+/** Instância da entrada de imagem (anexo). */
+let imageInput;
 /** @type {ReturnType<typeof createVoiceInput> | null} */
 let voiceInput = null;
 /** @type {string} */
@@ -247,16 +259,22 @@ function initApp(el) {
 	);
 	$hints = <div className="ai-hints"></div>;
 
+	imageInput = createImageInput({ onChange: updateSendState });
+	$attachBtn = imageInput.$btn;
+
 	el.append(
 		$messages,
 		<div className="ai-composer">
+			{imageInput.$chip}
 			{$hints}
 			{$input}
+			{imageInput.$btn}
 			{$micBtn ? $micBtn : null}
 			{$sendBtn}
 		</div>,
 	);
 	if ($voiceHint) el.append($voiceHint);
+	el.append(imageInput.$fileInput);
 	void initSkills();
 	renderEmptyState();
 }
@@ -299,6 +317,14 @@ function onKeyDown(e) {
 	if (e.isComposing || e.keyCode === 229) return;
 	e.preventDefault();
 	onSendClick();
+}
+
+/**
+ * Reage a mudanças no anexo pendente (chip visível etc.).
+ */
+function updateSendState() {
+	if (!$attachBtn) return;
+	$attachBtn.classList.toggle("attached", Boolean(imageInput?.pending));
 }
 
 function autoResize() {
@@ -533,10 +559,17 @@ function onSendClick() {
 /**
  * @param {"user"|"assistant"|"tool"|"error"} role
  * @param {string} text
+ * @param {boolean} [advanced] renderização avançada (Markdown/KaTeX/Mermaid)
+ * @param {string} [imageDataUrl] imagem anexada (mensagem do usuário)
  */
-function appendMessage(role, text, advanced = false) {
+function appendMessage(role, text, advanced = false, imageDataUrl) {
 	$messages.querySelector(".ai-empty")?.remove();
 	const $msg = <div className={`ai-msg ${role}`}></div>;
+	if (role === "user" && imageDataUrl) {
+		$msg.append(
+			<img className="ai-msg-image" src={imageDataUrl} alt="Imagem anexada" />,
+		);
+	}
 	if (role === "assistant") {
 		$msg.append(renderAssistantMessage(text));
 		if (advanced) {
@@ -603,8 +636,10 @@ function setBusy(busy) {
  * @param {string} rawText
  */
 async function send(rawText) {
-	const text = rawText.trim();
-	if (!text || controller) return;
+	const image = imageInput?.pending;
+	let text = rawText.trim();
+	if (!text && image) text = DEFAULT_IMAGE_PROMPT;
+	if ((!text && !image) || controller) return;
 	if (text.startsWith("/")) {
 		if (handleSlashCommand(text)) return;
 	}
@@ -619,16 +654,26 @@ async function send(rawText) {
 
 	$input.value = "";
 	autoResize();
-	appendMessage("user", text);
-	history.push({ role: "user", content: text });
-	const $thinking = appendMessage("tool", "Pensando");
-	$thinking.classList.add("ai-thinking");
+	appendMessage("user", text, false, image?.dataUrl);
+	history.push({
+		role: "user",
+		content: image ? buildVisionContent(text, image.dataUrl) : text,
+	});
+	imageInput?.clear();
+	updateSendState();
+
+	const log = createActivityLog();
+	$messages.append(log.$el);
+	const prepStep = log.addStep("Preparando contexto do editor");
+	prepStep.done("ok");
+	log.setStatus("Consultando o modelo…");
 
 	controller = new AbortController();
 	setBusy(true);
 	const snapshot = history.length;
 	liveBuffer = "";
 	$liveMsg = null;
+	let failed = false;
 
 	/** Re-renderiza a mensagem em streaming com o texto acumulado. */
 	function renderLive() {
@@ -653,11 +698,20 @@ async function send(rawText) {
 			onEvent(event) {
 				if (event.type === "tool") {
 					const label = TOOL_LABELS[event.name] || event.name;
-					appendMessage(
-						"tool",
-						event.result?.error ? `${label}: ${event.result.error}` : label,
-					);
+					const isSkill =
+						event.name === "list_skills" || event.name === "load_skill";
+					const step = log.addStep(label, {
+						icon: isSkill ? "🧩" : "🔧",
+						detail: event.name,
+					});
+					if (event.result?.error) {
+						step.fail(event.result.error);
+					} else {
+						step.done("ok");
+					}
+					log.setStatus("Executando ações…");
 				} else if (event.type === "assistant-delta") {
+					log.setStatus("Escrevendo resposta…");
 					liveBuffer += event.text;
 					renderLive();
 				} else if (event.content !== undefined) {
@@ -669,13 +723,18 @@ async function send(rawText) {
 		});
 	} catch (error) {
 		history = history.slice(0, snapshot - 1);
-		if (error?.name !== "AbortError") {
+		failed = error?.name !== "AbortError";
+		if (failed) {
+			log.addStep(`Erro: ${error?.message || error}`, {
+				icon: "❌",
+				running: false,
+			});
 			appendMessage("error", `Erro: ${error?.message || error}`);
 		} else if (liveBuffer) {
 			appendMessage("assistant", liveBuffer, true);
 		}
 	} finally {
-		$thinking.remove();
+		log.finish({ error: failed });
 		$liveMsg?.classList.remove("ai-live");
 		$liveMsg = null;
 		controller = null;

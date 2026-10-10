@@ -128,14 +128,20 @@ export function checkRequest({ config: aiConfig, messages }) {
 	if (fresh.length > config.maxRequestsPerMinutePerProvider)
 		reasons.push(`rate-limit:${provider}`);
 
-	// teto de payload
-	const payloadSize = JSON.stringify(messages || []).length;
+	// teto de payload — imagens em data URL não contam no teto:
+	// são substituídas por um marcador antes de medir (visão multimodal)
+	const measured = JSON.stringify(messages || []).replace(
+		/"data:[^"]{400,}"/g,
+		'"<image>"',
+	);
+	const payloadSize = measured.length;
 	if (payloadSize > config.maxPayloadChars)
 		reasons.push(`payload-too-large:${payloadSize}`);
 
 	// spam: requisição INTEIRA idêntica repetida (loops de agente mudam o
-	// payload a cada iteração, então não geram falso positivo)
-	const h = hash(JSON.stringify(messages || []));
+	// payload a cada iteração, então não geram falso positivo); imagens
+	// (data URLs) são normalizadas no hash para o mesmo fim
+	const h = hash(measured);
 	state.spam[h] = state.spam[h] || { count: 0, first: now };
 	const track = state.spam[h];
 	if (now - track.first > config.spamWindowMs) {

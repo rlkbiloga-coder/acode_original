@@ -58,9 +58,20 @@ export function compressHistory(history, options = {}) {
 
 function digestLine(message, lineLimit = DEFAULTS.lineLimit) {
 	const clip = (text) => {
-		const flat = String(text || "")
-			.replace(/\s+/g, " ")
-			.trim();
+		// conteúdo multimodal (array OpenAI): extrai as partes de texto
+		let raw;
+		if (Array.isArray(text)) {
+			const textParts = text
+				.filter((part) => part?.type === "text")
+				.map((part) => part.text)
+				.join(" ");
+			raw = text.some((part) => part?.type === "image_url")
+				? `${textParts} [imagem anexada]`
+				: textParts;
+		} else {
+			raw = String(text || "");
+		}
+		const flat = raw.replace(/\s+/g, " ").trim();
 		return flat.length > lineLimit ? `${flat.slice(0, lineLimit)}…` : flat;
 	};
 	if (message?.role === "user") return `user: ${clip(message.content)}`;

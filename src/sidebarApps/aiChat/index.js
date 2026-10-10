@@ -11,6 +11,7 @@ import commands from "lib/commands";
 import EditorFile from "lib/editorFile";
 import openFile from "lib/openFile";
 import appSettings from "lib/settings";
+import { upgradeAssistantMessage } from "./advancedRender";
 import { renderAssistantMessage } from "./format";
 import { createModelSwitcher } from "./modelSwitcher";
 import { createVoiceInput, isVoiceSupported } from "./voiceInput";
@@ -67,7 +68,8 @@ const TASK_PROMPTS = {
 	bugs: "Faça uma análise estática completa: aponte bugs, casos-limite (edge cases), condições de corrida, vazamentos de recurso e code smells. Para cada achado, informe: severidade (crítico/alto/médio/baixo), localização (linha/função) e correção sugerida com código.",
 	refatorar:
 		"Refatore este código aplicando boas práticas de engenharia: nomes descritivos, funções pequenas e coesas, responsabilidade única, princípio aberto/fechado, tratamento de erros explícito e imutabilidade onde fizer sentido. Entregue o código final completo e um changelog do que mudou.",
-	testes: "Gere uma suíte de casos de teste abrangente para este código: caminho feliz, casos-limite, entradas inválidas, mocks/stubs necessários e cobertura de erros. Use o framework adequado à linguagem e explique a cobertura pretendida.",
+	testes:
+		"Gere uma suíte de casos de teste abrangente para este código: caminho feliz, casos-limite, entradas inválidas, mocks/stubs necessários e cobertura de erros. Use o framework adequado à linguagem e explique a cobertura pretendida.",
 	doc: "Gere a documentação deste código no padrão da linguagem (JSDoc, docstring ou comentário de API). Inclua descrição, parâmetros com tipos, retorno, exceções lançadas e um exemplo de uso.",
 	otimizar:
 		"Analise a complexidade de tempo e espaço deste código e proponha otimizações concretas: algoritmos melhores, memoização, processamento preguiçoso (lazy), redução de alocações e de I/O. Justifique cada ganho esperado com notação Big-O.",
@@ -364,6 +366,7 @@ function handleSlashCommand(text) {
 		const $help = appendMessage(
 			"assistant",
 			SLASH_COMMANDS.map((item) => `${item.cmd} — ${item.desc}`).join("\n"),
+			true,
 		);
 		$help.querySelector("p").style.whiteSpace = "pre-line";
 		return true;
@@ -531,11 +534,14 @@ function onSendClick() {
  * @param {"user"|"assistant"|"tool"|"error"} role
  * @param {string} text
  */
-function appendMessage(role, text) {
+function appendMessage(role, text, advanced = false) {
 	$messages.querySelector(".ai-empty")?.remove();
 	const $msg = <div className={`ai-msg ${role}`}></div>;
 	if (role === "assistant") {
 		$msg.append(renderAssistantMessage(text));
+		if (advanced) {
+			void upgradeAssistantMessage($msg, text);
+		}
 		$msg.append(
 			<button
 				type="button"
@@ -547,7 +553,12 @@ function appendMessage(role, text) {
 					if (navigator.clipboard?.writeText) {
 						navigator.clipboard.writeText(value);
 					} else {
-						const $ta = <textarea className="ai-input" style="position:fixed;opacity:0"></textarea>;
+						const $ta = (
+							<textarea
+								className="ai-input"
+								style="position:fixed;opacity:0"
+							></textarea>
+						);
 						document.body.append($ta);
 						$ta.value = value;
 						$ta.select();
@@ -652,7 +663,7 @@ async function send(rawText) {
 				} else if (event.content !== undefined) {
 					$liveMsg?.remove();
 					$liveMsg = null;
-					if (event.content) appendMessage("assistant", event.content);
+					if (event.content) appendMessage("assistant", event.content, true);
 				}
 			},
 		});
@@ -661,7 +672,7 @@ async function send(rawText) {
 		if (error?.name !== "AbortError") {
 			appendMessage("error", `Erro: ${error?.message || error}`);
 		} else if (liveBuffer) {
-			appendMessage("assistant", liveBuffer);
+			appendMessage("assistant", liveBuffer, true);
 		}
 	} finally {
 		$thinking.remove();

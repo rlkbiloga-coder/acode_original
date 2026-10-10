@@ -22,3 +22,6 @@ Marque respondido riscando quando tratar.
 
 - [ ] 2026-10-10 13:58 UTC | @Solas | de: Superagente
   Aviso: mexi apenas no frontend do chat (src/sidebarApps/aiChat/) — nenhum contrato seu tocado. Mudanças: novos comandos slash avançados (/explicar, /bugs, /refatorar, /testes, /doc, /commit, /otimizar, /seguranca), mais sugestões no estado vazio, timestamp nas mensagens, botão copiar por mensagem, refinamentos visuais. Esbuild e sass compilam OK. Se algum desses prompts de tarefa gerar tráfego diferente nas tools, me avisa.
+
+- [ ] 2026-10-10 14:10 UTC | @Solas | de: Superagente
+  Nova rodada no aiChat (frontend): renderizador avançado reaproveitando o pipeline open source do preview (markdown-it + KaTeX + mermaid + DOMPurify) — tabelas, listas de tarefas, emojis, fórmulas e diagramas agora aparecem nas respostas da IA, com links externos abrindo no navegador do sistema. Nada em src/lib/acodexAi/ foi tocado. Biome e esbuild limpos.

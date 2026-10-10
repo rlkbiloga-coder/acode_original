@@ -1044,6 +1044,20 @@ async function EditorManager($header, $body) {
 		);
 	}
 
+	function makeGutterTheme() {
+		const dur = "var(--dur-fast, 140ms)";
+		const easing = "var(--ease-out-soft, cubic-bezier(0.16, 1, 0.3, 1))";
+		return EditorView.theme({
+			".cm-lineNumbers .cm-gutterElement": {
+				transition: `background-color ${dur} ${easing}`,
+			},
+			".cm-lineNumbers .cm-gutterElement:hover": {
+				backgroundColor:
+					"color-mix(in srgb, var(--secondary-text-color, currentColor) 7%, transparent)",
+			},
+		});
+	}
+
 	function makeLineNumberExtension() {
 		const { linenumbers = true, relativeLineNumbers = false } =
 			appSettings?.value || {};
@@ -1070,8 +1084,13 @@ async function EditorManager($header, $body) {
 					border: "none !important",
 				},
 			});
+		const gutterTheme = makeGutterTheme();
 		if (!relativeLineNumbers)
-			return Prec.highest([lineNumbers(lineNumberConfig), ...activeLineGutter]);
+			return Prec.highest([
+				lineNumbers(lineNumberConfig),
+				gutterTheme,
+				...activeLineGutter,
+			]);
 		return Prec.highest([
 			lineNumbers({
 				...lineNumberConfig,
@@ -1085,6 +1104,7 @@ async function EditorManager($header, $body) {
 					}
 				},
 			}),
+			gutterTheme,
 			...activeLineGutter,
 		]);
 	}
@@ -1254,7 +1274,7 @@ async function EditorManager($header, $body) {
 					".cm-gutter.cm-foldGutter .cm-gutterElement": {
 						opacity: 0,
 						pointerEvents: "none",
-						transition: "opacity .12s ease",
+						transition: "opacity var(--dur-fast, 140ms) var(--ease-out-soft, cubic-bezier(0.16, 1, 0.3, 1))",
 					},
 					".cm-gutter.cm-foldGutter:hover .cm-gutterElement, .cm-gutter.cm-foldGutter .cm-gutterElement:hover":
 						{

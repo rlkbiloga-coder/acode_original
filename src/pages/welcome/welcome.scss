@@ -21,7 +21,8 @@
     animation: welcomeFadeUp 0.5s var(--ease-out-soft, cubic-bezier(0.16, 1, 0.3, 1)) both;
 
     .logo-wrap {
-      padding: 8px;
+      position: relative;
+      padding: 10px;
       border-radius: var(--radius-lg, 14px);
       background: color-mix(
         in srgb,
@@ -29,13 +30,75 @@
         transparent
       );
       box-shadow: var(--elevation-3, 0 8px 24px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.14));
+      animation: logoFloat 4s var(--ease-in-out-soft, cubic-bezier(0.65, 0, 0.35, 1)) infinite;
+
+      .logo-glow {
+        position: absolute;
+        inset: -14px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(124, 77, 255, 0.35),
+          rgba(0, 229, 255, 0.18) 55%,
+          transparent 70%
+        );
+        filter: blur(14px);
+        animation: logoGlow 3s var(--ease-in-out-soft, cubic-bezier(0.65, 0, 0.35, 1)) infinite;
+        pointer-events: none;
+      }
     }
 
     .logo {
-      width: 64px;
-      height: 64px;
-      max-height: 64px;
+      width: 72px;
+      height: 72px;
+      max-height: 72px;
       display: block;
+      position: relative;
+    }
+
+    .title-gradient {
+      background: linear-gradient(
+        90deg,
+        var(--primary-text-color) 0%,
+        #7c4dff 45%,
+        #00e5ff 90%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 4s linear infinite;
+
+      span {
+        font-style: italic;
+      }
+    }
+
+    .power-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 4px;
+
+      .chip {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: var(--radius-full, 999px);
+        color: var(--primary-text-color);
+        background: color-mix(
+          in srgb,
+          var(--popup-background-color) 40%,
+          transparent
+        );
+        border: 1px solid color-mix(in srgb, var(--border-color) 30%, transparent);
+        animation: chipPop 0.45s var(--ease-out-soft, cubic-bezier(0.16, 1, 0.3, 1)) both;
+
+        &:nth-child(2) { animation-delay: 0.08s; }
+        &:nth-child(3) { animation-delay: 0.16s; }
+        &:nth-child(4) { animation-delay: 0.24s; }
+      }
     }
 
     h1 {
@@ -330,4 +393,25 @@
     background-repeat: no-repeat;
     background-position: center;
   }
+}
+
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes logoGlow {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes chipPop {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
 }

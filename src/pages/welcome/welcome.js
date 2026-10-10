@@ -1,5 +1,5 @@
 import { getResolvedKeyBindings } from "cm/commandRegistry";
-import logoSrc from "components/logo/logo.png?inline";
+import logoSrc from "components/logo/acodex-logo.png?inline";
 import config from "lib/config";
 import EditorFile from "lib/editorFile";
 
@@ -45,10 +45,25 @@ function createWelcomeContent() {
 			{/* Hero Section */}
 			<header className="welcome-header">
 				<div className="logo-wrap">
-					<img className="logo" src={logoSrc} width="64" height="64" alt="" />
+					<div className="logo-glow" aria-hidden="true" />
+					<img
+						className="logo"
+						src={logoSrc}
+						width="72"
+						height="72"
+						alt="Acodex"
+					/>
 				</div>
-				<h1>Welcome to Acodex</h1>
-				<p className="tagline">IDE • Code • Build</p>
+				<h1 className="title-gradient">
+					Welcome to <span>AcodexAI</span>
+				</h1>
+				<p className="tagline">IDE • IA • VOICE • SANDBOX</p>
+				<div className="power-chips">
+					<span className="chip">⚡ AI Chat</span>
+					<span className="chip">🎙 Voice</span>
+					<span className="chip">🐍 Python</span>
+					<span className="chip">🧪 Sandbox</span>
+				</div>
 			</header>
 
 			{/* Get Started Section */}
@@ -83,6 +98,11 @@ function createWelcomeContent() {
 						icon="historyrestore"
 						label={strings.recent}
 						onClick={() => acode.exec("recent")}
+					/>
+					<ActionRow
+						icon="play_arrow"
+						label="Sandbox Terminal"
+						onClick={() => acode.exec("open-sandbox")}
 					/>
 					<ActionRow
 						icon="tune"

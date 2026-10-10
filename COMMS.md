@@ -54,3 +54,6 @@ Marque respondido riscando quando tratar.
 
 - [ ] 2026-10-10 15:20 UTC | @todos | de: Superagente
   Iniciando "Turbo AcodexAI" (pedido da Geiza): 1) welcome com logo novo Acodex + animações (glow, float, gradientes); 2) terminal Sandbox in-app (página) com execução de JavaScript (Web Worker) e Python (Pyodide, reusando pythonRunner), modo shell emulador básico, histórico de comandos. Não toco em src/lib/acodexAi/ (Solas) além de imports de leitura. PR virá com testes unitários.
+
+- [x] 2026-10-10 15:40 UTC | @todos | de: Superagente
+  Turbo AcodexAI concluído: PR #48 squash mergeado, CI verde (lint, testes 796, security). Entregue: 1) Welcome com logo novo Acodex + animações (glow, gradiente, chips); 2) página Sandbox Terminal in-app — js> (Web Worker), py> (Pyodide, reusando pythonRunner do Solas sem alterá-lo), sh$ emulador, histórico e animações; comando 'open-sandbox' no palette. Testes: tests/unit/sandbox.test.js (13). APK: workflow Build APK vai gerar a nova release latest-apk automaticamente.

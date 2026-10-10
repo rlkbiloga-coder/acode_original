@@ -18,6 +18,16 @@
       --bg-color: #20202c;
       /* fallback splash color */
       --test-height: 45px;
+      /* Acodex UI tokens (espelha src/styles/designTokens.scss; o splash
+         renderiza antes do bundle, por isso os valores ficam inline aqui) */
+      --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-fast: 140ms;
+      --dur-normal: 220ms;
+      --dur-slow: 320ms;
+      --radius-sm: 6px;
+      --radius-lg: 14px;
+      --radius-full: 999px;
     }
 
     body.loading {
@@ -74,8 +84,8 @@
 
       filter: drop-shadow(0 10px 32px rgba(0, 0, 0, 0.55));
 
-      animation: splashEnter 0.55s ease-out both,
-        splashPulse 2.6s ease-in-out 0.55s infinite;
+      animation: splashEnter var(--dur-slow) var(--ease-out-soft) both,
+        splashPulse 2.6s var(--ease-in-out-soft) var(--dur-slow) infinite;
     }
 
     @keyframes splashEnter {
@@ -112,7 +122,7 @@
       height: 3px;
       margin-top: 76px;
       margin-left: -75px;
-      border-radius: 3px;
+      border-radius: var(--radius-full);
       background: rgba(255, 255, 255, 0.12);
       overflow: hidden;
     }
@@ -123,9 +133,9 @@
       bottom: 0;
       left: -40%;
       width: 40%;
-      border-radius: 3px;
+      border-radius: var(--radius-full);
       background: rgba(255, 255, 255, 0.85);
-      animation: splashBar 1.5s ease-in-out infinite;
+      animation: splashBar 1.5s var(--ease-in-out-soft) infinite;
     }
 
     @keyframes splashBar {
@@ -147,10 +157,10 @@
       white-space: pre;
       font-family: monospace;
       text-align: left;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 3px 10px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: var(--radius-full);
+      padding: 4px 12px;
     }
 
     .splash-message {
@@ -163,7 +173,7 @@
       line-height: 1.4;
       width: 86vw;
       text-align: center;
-      animation: splashMsgFade 0.4s ease-out both;
+      animation: splashMsgFade var(--dur-normal) var(--ease-out-soft) both;
     }
 
     @keyframes splashMsgFade {
@@ -176,7 +186,18 @@
         transform: translate(-50%, 0);
       }
     }
-  </style>
+    @media (prefers-reduced-motion: reduce) {
+    #splash-logo,
+    .splash-bar-fill,
+    .splash-message {
+      animation: none;
+    }
+
+    .splash-bar-fill {
+      left: 30%;
+    }
+  }
+</style>
 
   <!-- Set theme color BEFORE UI renders -->
   <script>

@@ -1,6 +1,5 @@
 import "core-js/stable";
 import "html-tag-js/dist/polyfill";
-import { inject as injectAnalytics } from "@vercel/analytics";
 
 import "./main.scss";
 import "res/icons/style.css";
@@ -12,6 +11,7 @@ import "pages/welcome/welcome.scss";
 import "pages/sandbox/sandbox.scss";
 
 import "lib/polyfill";
+import { initWebAnalytics } from "lib/webAnalytics";
 import "cm/supportedModes";
 import "components/WebComponents";
 import "handlers/editorWorkaround";
@@ -171,8 +171,8 @@ async function onDeviceReady() {
 
 	config.HAS_PRO = !isFreePackage;
 
-	// Initialize Vercel Web Analytics
-	injectAnalytics({ mode: "production" });
+	// Vercel Web Analytics + Speed Insights (apenas no deploy web)
+	initWebAnalytics();
 
 	// Capture synchronous errors
 	window.addEventListener("error", (event) => {

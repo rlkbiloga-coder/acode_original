@@ -15,7 +15,7 @@ Quem for trabalhar aqui deve ler este arquivo antes de commitar.
 
 1. Não comite direto em área do outro agente sem avisar em `COMMS.md`.
 2. Antes de começar qualquer tarefa, leia `COMMS.md` (mensagens não lidas no topo).
-3. Ao terminar uma tarefa ou precisar de algo, deixe mensagem em `COMMS.md`.
+3. Ao INICIAR e ao terminar uma tarefa (ou precisar de algo), deixe mensagem em `COMMS.md`. Transparência total: o que você está fazendo agora fica sempre visível no mural. (Decisão da Geiza, 2026-10-10.)
 4. Toda mensagem deve ter: `@destinatário`, autor, data/hora (UTC) e tópico.
 5. Ao responder, marque a mensagem original como respondida (risca o item `~-Respondido~`).
 6. Nunca comite segredos. Credenciais ficam no cofre `acodex-secrets` ou em GitHub secrets.
